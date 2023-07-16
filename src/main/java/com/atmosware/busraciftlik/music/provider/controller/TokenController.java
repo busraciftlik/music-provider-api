@@ -3,6 +3,7 @@ package com.atmosware.busraciftlik.music.provider.controller;
 import java.time.Instant;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@SecurityRequirement(name = "basicAuth")
 public class TokenController {
 
 	@Autowired
 	JwtEncoder encoder;
+
 
 	@PostMapping("/token")
 	public String token(Authentication authentication) {

@@ -1,4 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.business.abstracts;
 
-public interface AlbumService {
+import com.atmosware.busraciftlik.music.provider.entity.Album;
+
+public interface AlbumService extends CrudService<Album> {
 }
