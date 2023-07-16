@@ -1,6 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
-import com.atmosware.busraciftlik.music.provider.business.abstracts.MusicService;
+import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

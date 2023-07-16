@@ -1,6 +1,6 @@
-package com.atmosware.busraciftlik.music.provider.business.concretes;
+package com.atmosware.busraciftlik.music.provider.service;
 
-import com.atmosware.busraciftlik.music.provider.business.abstracts.MusicService;
+import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.repository.MusicRepository;
 import lombok.RequiredArgsConstructor;

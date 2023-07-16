@@ -1,6 +1,6 @@
-package com.atmosware.busraciftlik.music.provider.business.concretes;
+package com.atmosware.busraciftlik.music.provider.service;
 
-import com.atmosware.busraciftlik.music.provider.business.abstracts.ArtistService;
+import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.repository.ArtistRepository;

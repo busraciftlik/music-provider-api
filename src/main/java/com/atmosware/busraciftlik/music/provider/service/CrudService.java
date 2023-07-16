@@ -1,4 +1,4 @@
-package com.atmosware.busraciftlik.music.provider.business.abstracts;
+package com.atmosware.busraciftlik.music.provider.service;
 
 import java.util.List;
 import java.util.UUID;
