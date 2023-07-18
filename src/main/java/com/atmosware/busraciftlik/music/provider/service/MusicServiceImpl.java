@@ -34,7 +34,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    public Music delete(UUID id) {
+    public Music delete(Integer id) {
         Music music = repository.findById(id).orElseThrow();
         repository.deleteById(id);
         return music;

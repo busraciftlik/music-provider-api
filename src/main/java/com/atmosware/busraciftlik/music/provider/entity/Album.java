@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -18,14 +17,13 @@ import java.util.UUID;
 @Table(name = "albums")
 public class Album {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private LocalDate releaseDate;
     @OneToMany
     private Set<Music> musics;
     @ManyToOne
     private Artist artist;
-
 
 }

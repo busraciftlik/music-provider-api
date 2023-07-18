@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Getter
@@ -17,8 +16,8 @@ import java.util.UUID;
 @Table(name = "playlists")
 public class Playlist {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @OneToMany
     private Set<Music> musics;

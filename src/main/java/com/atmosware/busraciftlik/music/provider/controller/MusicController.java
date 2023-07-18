@@ -33,7 +33,7 @@ public class MusicController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Music delete(@PathVariable UUID id) {
+    public Music delete(@PathVariable Integer id) {
         return service.delete(id);
     }
 }

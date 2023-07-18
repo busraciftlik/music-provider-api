@@ -1,6 +1,5 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
-import java.util.UUID;
 @Entity
 @Getter
 @Setter
@@ -20,9 +18,9 @@ import java.util.UUID;
 public class Artist {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Hidden
-    private UUID id;
+    private Integer id;
     private String name;
     @OneToMany
     @Schema(nullable = true)

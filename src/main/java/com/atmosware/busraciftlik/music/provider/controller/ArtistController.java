@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/artist")
@@ -36,12 +35,12 @@ public class ArtistController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Artist delete(@PathVariable UUID id){
+    public Artist delete(@PathVariable Integer id){
         return service.delete(id);
     }
 
     @PostMapping("/addMusic")
-    public Set<Music> addMusic(@PathVariable UUID artistId, @RequestBody Music music){
+    public Set<Music> addMusic(@PathVariable Integer artistId, @RequestBody Music music){
        return service.addMusic(artistId,music);
     }
 }
