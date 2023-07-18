@@ -15,10 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "albums")
-public class Album {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+public class Album extends BaseEntity {
     private String name;
     private LocalDate releaseDate;
     @OneToMany

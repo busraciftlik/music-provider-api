@@ -1,9 +1,11 @@
-package com.atmosware.busraciftlik.music.provider.service;
+package com.atmosware.busraciftlik.music.provider.service.impl;
 
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
+import com.atmosware.busraciftlik.music.provider.enums.Status;
 import com.atmosware.busraciftlik.music.provider.repository.ArtistRepository;
+import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,25 +31,24 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public Artist update(Artist artist) {
         Artist exists = repository.findById(artist.getId()).orElseThrow();
-        exists.setName(artist.getName());
+        Artist.ArtistBuilder artistBuilder = exists.toBuilder();
+        artistBuilder.name(artist.getName());
         if (Objects.nonNull(artist.getAlbums())) {
-            exists.setAlbums(artist.getAlbums());
+            artistBuilder.albums(artist.getAlbums());
         }
         if (Objects.nonNull(artist.getMusics())) {
-            exists.setMusics(artist.getMusics());
+            artistBuilder.musics(artist.getMusics());
         }
-        return repository.save(exists);
+        exists.setStatus(Status.INACTIVE);
+        repository.save(exists);
+        return repository.save(artistBuilder.build());
     }
 
     @Override
     public Artist delete(Integer id) {
-//        public void checkIfExistsById(id) {
-//            if (!repository.existsById(id)) {
-//                throw new RuntimeException();
-//            }
-//        }
         Artist artist = repository.findById(id).orElseThrow();
-        repository.deleteById(id);
+        artist.setStatus(Status.INACTIVE);
+        repository.save(artist);
         return artist;
     }
 

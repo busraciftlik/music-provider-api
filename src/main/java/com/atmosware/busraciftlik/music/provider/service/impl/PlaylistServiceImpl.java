@@ -1,7 +1,8 @@
-package com.atmosware.busraciftlik.music.provider.service;
+package com.atmosware.busraciftlik.music.provider.service.impl;
 
 import com.atmosware.busraciftlik.music.provider.entity.Playlist;
 import com.atmosware.busraciftlik.music.provider.repository.PlaylistRepository;
+import com.atmosware.busraciftlik.music.provider.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -14,11 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "playlists")
-public class Playlist {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+public class Playlist extends BaseEntity {
     @OneToMany
     private Set<Music> musics;
 }

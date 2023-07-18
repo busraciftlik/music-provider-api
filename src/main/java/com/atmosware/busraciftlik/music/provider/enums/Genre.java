@@ -1,6 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.enums;
 
-public enum Type {
+public enum Genre {
     POP,
     JAZZ,
     HIPHOP,

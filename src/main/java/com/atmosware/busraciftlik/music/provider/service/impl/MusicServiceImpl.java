@@ -1,4 +1,4 @@
-package com.atmosware.busraciftlik.music.provider.service;
+package com.atmosware.busraciftlik.music.provider.service.impl;
 
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
