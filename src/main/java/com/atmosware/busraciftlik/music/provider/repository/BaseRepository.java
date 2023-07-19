@@ -3,12 +3,10 @@
 //import com.atmosware.busraciftlik.music.provider.entity.BaseEntity;
 //import com.atmosware.busraciftlik.music.provider.enums.Status;
 //import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.data.jpa.repository.Query;
-//import org.springframework.data.repository.query.Param;
+//
 //
 //import java.util.List;
 //import java.util.Optional;
-//
 //public interface BaseRepository<T extends BaseEntity> extends JpaRepository<T, Integer> {
 ////    @Query("UPDATE BaseEntity b SET b.status='INACTIVE' WHERE b.id=:id")
 ////    void deleteById(@Param("id") Integer id);

@@ -1,15 +1,14 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
+@Builder(toBuilder = true)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,6 +17,7 @@ import java.util.Set;
 public class Album extends BaseEntity {
     private String name;
     private LocalDate releaseDate;
+    @JsonManagedReference
     @OneToMany
     private Set<Music> musics;
     @ManyToOne

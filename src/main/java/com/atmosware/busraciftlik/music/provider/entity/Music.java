@@ -1,14 +1,12 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
 import com.atmosware.busraciftlik.music.provider.enums.Genre;
-import io.swagger.v3.oas.annotations.Hidden;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
+@Builder(toBuilder = true)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -18,6 +16,7 @@ public class Music extends BaseEntity {
     private String name;
     @ManyToOne
     private Artist artist;
+    @JsonBackReference
     @ManyToOne
     private Album album;
     @Enumerated(EnumType.STRING)
