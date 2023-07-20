@@ -1,7 +1,7 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
+import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
-import com.atmosware.busraciftlik.music.provider.dto.response.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;

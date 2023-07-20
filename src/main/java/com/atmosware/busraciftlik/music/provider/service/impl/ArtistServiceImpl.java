@@ -1,8 +1,8 @@
 package com.atmosware.busraciftlik.music.provider.service.impl;
 
+import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
+import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
-import com.atmosware.busraciftlik.music.provider.dto.response.AlbumDto;
-import com.atmosware.busraciftlik.music.provider.dto.response.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
@@ -76,7 +76,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public ArtistDto updateArtistName(Integer id,UpdateArtistNameRequest request) {
+    public ArtistDto updateArtistName(Integer id, UpdateArtistNameRequest request) {
         Artist artist = repository.findById(id).orElseThrow();
         artist.setName(request.getName());
         Artist saved = repository.save(artist);

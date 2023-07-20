@@ -1,5 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
+import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class MusicController {
     }
 
     @GetMapping("/getAll")
-    public List<Music> findAll() {
+    public List<MusicDto> findAll() {
         return service.findAll();
     }
 

@@ -1,13 +1,14 @@
 package com.atmosware.busraciftlik.music.provider.service.impl;
 
-import com.atmosware.busraciftlik.music.provider.service.MusicService;
+import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.repository.MusicRepository;
+import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,13 +16,20 @@ public class MusicServiceImpl implements MusicService {
     private final MusicRepository repository;
 
     @Override
-    public List<Music> findAll() {
-        return repository.findAll();
+    public List<MusicDto> findAll() {
+        List<Music> musics = repository.findAll();
+        return musics.stream().map(music -> MusicDto.builder()
+                .id(music.getId())
+                .name(music.getName())
+                .artistName(music.getArtist().getName())
+                .albumName(music.getAlbum().getName())
+                .genre(music.getGenre()).build()).collect(Collectors.toList());
     }
 
     @Override
-    public Music add(Music music) {
-        return repository.save(music);
+    public Music add(Music request) {
+
+        return repository.save(request);
     }
 
     @Override

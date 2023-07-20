@@ -6,6 +6,6 @@ import lombok.Builder;
 import java.util.Set;
 
 @Builder
-public record MusicDto (Integer id, String name, Set<String> albums, Genre genre){
+public record MusicDto (Integer id, String name,String artistName, String albumName, Genre genre){
 
 }
