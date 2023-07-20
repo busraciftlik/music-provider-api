@@ -76,14 +76,20 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public ArtistDto updateArtistName(UpdateArtistNameRequest request) {
-        Artist artist = repository.findById(request.getId()).orElseThrow();
+    public ArtistDto updateArtistName(Integer id,UpdateArtistNameRequest request) {
+        Artist artist = repository.findById(id).orElseThrow();
         artist.setName(request.getName());
         Artist saved = repository.save(artist);
         return ArtistDto.builder()
                 .id(saved.getId())
                 .name(saved.getName())
-                .albums(saved.getAlbums().stream().map(album -> AlbumDto.builder().artistName(album.getArtist().getName()).id(album.getId()).name(album.getName()).musicSet(album.getMusics().stream().map(Music::getName).collect(Collectors.toSet())).build()).collect(Collectors.toSet())).build();
+                .albums(saved.getAlbums()
+                        .stream().map(album -> AlbumDto.builder()
+                                .artistName(album.getArtist().getName())
+                                .id(album.getId()).name(album.getName())
+                                .musics(album.getMusics().stream().map(Music::getName)
+                                        .collect(Collectors.toSet())).build())
+                        .collect(Collectors.toSet())).build();
 
     }
 }

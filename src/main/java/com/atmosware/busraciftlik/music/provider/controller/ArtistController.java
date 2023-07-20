@@ -1,6 +1,8 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
+import com.atmosware.busraciftlik.music.provider.dto.response.ArtistDto;
+import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
@@ -34,14 +36,23 @@ public class ArtistController {
         return service.update(artist);
     }
 
+    @PutMapping("/updateName/{id}")
+    public ArtistDto updateArtistName(@PathVariable Integer id, @RequestBody UpdateArtistNameRequest request){
+        return service.updateArtistName(id,request);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Artist delete(@PathVariable Integer id){
         return service.delete(id);
     }
 
-    @PostMapping("/addMusic")
-    public Set<Music> addMusic(@PathVariable Integer artistId, @RequestBody Music music){
-       return service.addMusic(artistId,music);
+    @PostMapping("/addMusic/{id}")
+    public Set<Music> addMusic(@PathVariable Integer id, @RequestBody Music music){
+       return service.addMusic(id,music);
+    }
+    @PostMapping("/addAlbum/{id}")
+    public Set<Album> addAlbum( @PathVariable Integer id ,@RequestBody Album album){
+        return service.addAlbum(id,album);
     }
 }

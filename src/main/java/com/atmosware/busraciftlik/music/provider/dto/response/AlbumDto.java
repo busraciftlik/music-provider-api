@@ -5,7 +5,6 @@ import lombok.*;
 import java.util.Set;
 
 @Builder
-@AllArgsConstructor
-public record AlbumDto(Integer id, String name, String artistName, Set<String> musicSet) {
+public record AlbumDto (Integer id, String name, String artistName, Set<String> musics) {
 
 }

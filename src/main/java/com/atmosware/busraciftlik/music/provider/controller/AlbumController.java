@@ -18,6 +18,7 @@ public class AlbumController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public Album add(@RequestBody Album album){
+
         return service.add(album);
     }
 
