@@ -4,5 +4,5 @@ import com.atmosware.busraciftlik.music.provider.entity.Music;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface MusicRepository extends JpaRepository<Music, Integer> {
+public interface MusicRepository extends BaseRepository<Music, Integer> {
 }

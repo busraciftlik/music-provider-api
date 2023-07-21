@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateMusicRequest {
+public class MusicRequest {
     private String name;
     private Genre genre;
 }

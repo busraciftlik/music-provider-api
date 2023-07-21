@@ -1,6 +1,8 @@
 package com.atmosware.busraciftlik.music.provider.service.impl;
 
+import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
+import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
@@ -44,13 +46,21 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Set<Music> addMusic(Integer artistId, Music music) {
-        return null;
+    public Set<MusicDto> addMusic(Integer artistId, Music music) {
+        Artist artist = repository.findById(artistId).orElseThrow();
+        Set<Music> musics = artist.getMusics();
+        musics.add(music);
+        Artist saved = repository.save(artist);
+        return mapMusicEntity2MusicDto(saved.getMusics());
     }
 
     @Override
-    public Set<Album> addAlbum(Integer artistId, Album album) {
-        return null;
+    public Set<AlbumDto> addAlbum(Integer artistId, Album album) {
+        Artist artist = repository.findById(artistId).orElseThrow();
+        Set<Album> albums = artist.getAlbums();
+        albums.add(album);
+        Artist saved = repository.save(artist);
+        return mapAlbumEntity2AlbumDto(saved.getAlbums());
     }
 
     @Override

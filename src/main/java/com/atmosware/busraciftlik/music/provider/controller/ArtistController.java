@@ -1,6 +1,8 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
+import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
+import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
@@ -49,11 +51,11 @@ public class ArtistController {
     }
 
     @PostMapping("/addMusic/{id}")
-    public Set<Music> addMusic(@PathVariable Integer id, @RequestBody Music music){
+    public Set<MusicDto> addMusic(@PathVariable Integer id, @RequestBody Music music){
        return service.addMusic(id,music);
     }
     @PostMapping("/addAlbum/{id}")
-    public Set<Album> addAlbum( @PathVariable Integer id ,@RequestBody Album album){
+    public Set<AlbumDto> addAlbum(@PathVariable Integer id , @RequestBody Album album){
         return service.addAlbum(id,album);
     }
 }

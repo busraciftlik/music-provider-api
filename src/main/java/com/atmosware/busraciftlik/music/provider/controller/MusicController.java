@@ -1,6 +1,7 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -18,12 +20,12 @@ public class MusicController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Music add(@RequestBody Music music) {
-        return service.add(music);
+    public MusicDto add(@RequestBody CreateMusicRequest request) {
+        return service.add(request);
     }
 
     @GetMapping("/getAll")
-    public List<MusicDto> findAll() {
+    public Set<MusicDto> findAll() {
         return service.findAll();
     }
 

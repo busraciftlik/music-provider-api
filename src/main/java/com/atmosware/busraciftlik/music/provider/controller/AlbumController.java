@@ -1,6 +1,7 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -18,9 +19,9 @@ public class AlbumController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public AlbumDto add(@RequestBody Album album){
+    public AlbumDto add(@RequestBody CreateAlbumRequest request){
 
-        return service.add(album);
+        return service.add(request);
     }
 
     @GetMapping("/getAll")

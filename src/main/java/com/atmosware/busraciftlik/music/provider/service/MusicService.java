@@ -1,22 +1,21 @@
 package com.atmosware.busraciftlik.music.provider.service;
 
-import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 
-import java.util.List;
+import java.util.Set;
 
 public interface MusicService {
-    List<MusicDto> findAll();
+    Set<MusicDto> findAll();
 
-    Music add(Music request);
+    MusicDto add(CreateMusicRequest request);
 
     Music update(Music music);
 
     Music delete(Integer id);
 
-    //TODO: 20.07.2023
-    // AlbumDto addAlbum(Integer musicId, Album album);
+    Set<MusicDto> addAlbum(Integer musicId, Album album);
 
 }
