@@ -1,14 +1,16 @@
 package com.atmosware.busraciftlik.music.provider.service;
 
 
+import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 
-import java.util.List;
+import java.util.Set;
 
 public interface AlbumService  {
-    List<Album> findAll();
+    Set<AlbumDto> findAll();
 
-    Album add(Album album);
+    AlbumDto add(CreateAlbumRequest request);
 
     Album update(Album album);
 

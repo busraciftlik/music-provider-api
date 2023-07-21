@@ -5,5 +5,6 @@ import lombok.Builder;
 import java.util.Set;
 
 @Builder
-public record ArtistDto (Integer id, String name, Set<MusicDto> musics, Set<AlbumDto> albums) {
+public record PlaylistDto(Integer id, String name, Set<String> musics) {
+
 }

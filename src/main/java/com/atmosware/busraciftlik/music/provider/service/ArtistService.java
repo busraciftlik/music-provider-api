@@ -1,22 +1,22 @@
 package com.atmosware.busraciftlik.music.provider.service;
 
 import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 
-import java.util.List;
 import java.util.Set;
 
 public interface ArtistService  {
-    List<Artist> findAll();
+    Set<ArtistDto> findAll();
 
-    Artist add(Artist artist);
+    ArtistDto add(CreateArtistRequest request);
 
     Artist update(Artist artist);
 
-    Artist delete(Integer id);
+    ArtistDto delete(Integer id);
     Set<Music> addMusic(Integer artistId, Music music);
     Set<Album> addAlbum(Integer artistId, Album album);
 

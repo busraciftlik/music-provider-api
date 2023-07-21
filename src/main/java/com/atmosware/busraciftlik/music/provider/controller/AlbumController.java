@@ -1,5 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
+import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -7,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/album")
@@ -17,13 +18,13 @@ public class AlbumController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Album add(@RequestBody Album album){
+    public AlbumDto add(@RequestBody Album album){
 
         return service.add(album);
     }
 
     @GetMapping("/getAll")
-    public List<Album> findAll(){
+    public Set<AlbumDto> findAll(){
         return service.findAll();
     }
 
