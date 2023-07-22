@@ -5,10 +5,13 @@ import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 
+import java.util.List;
 import java.util.Set;
 
 public interface MusicService {
     Set<MusicDto> findAll();
+
+    Set<Music> findAllByIds(List<Integer> ids);
 
     MusicDto add(CreateMusicRequest request);
 

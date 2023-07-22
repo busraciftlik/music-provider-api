@@ -4,7 +4,6 @@ import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +19,6 @@ public class AlbumController {
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public AlbumDto add(@RequestBody CreateAlbumRequest request){
-
         return service.add(request);
     }
 

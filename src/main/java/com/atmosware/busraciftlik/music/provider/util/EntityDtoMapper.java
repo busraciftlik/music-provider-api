@@ -22,7 +22,7 @@ public final class EntityDtoMapper {
                 .name(music.getName())
                 .genre(music.getGenre())
                 .artistName(music.getArtist().getName())
-                .albumName(Optional.of(music.getAlbum()).map(Album::getName).orElse(null))
+                .albumName(Optional.ofNullable(music.getAlbum()).map(Album::getName).orElse(null))
                 .build()).orElse(null);
     }
 

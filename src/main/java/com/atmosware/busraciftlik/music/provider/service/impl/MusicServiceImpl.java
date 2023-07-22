@@ -3,8 +3,11 @@ package com.atmosware.busraciftlik.music.provider.service.impl;
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
+import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
+import com.atmosware.busraciftlik.music.provider.enums.Status;
 import com.atmosware.busraciftlik.music.provider.repository.MusicRepository;
+import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
 @RequiredArgsConstructor
 public class MusicServiceImpl implements MusicService {
     private final MusicRepository repository;
+    private final ArtistService artistService;
 
     @Override
     public Set<MusicDto> findAll() {
@@ -24,10 +28,15 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
+    public Set<Music> findAllByIds(List<Integer> ids) {
+        return repository.findAllByIdInAndStatus(ids, Status.ACTIVE);
+    }
+
+    @Override
     public MusicDto add(CreateMusicRequest request) {
-        return MusicDto.builder()
-                .name(request.getName())
-                .genre(request.getGenre()).build();
+        Artist artist = artistService.findById(request.getArtistId());
+        Music saved = repository.save(Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build());
+        return mapMusicEntity2MusicDto(saved);
 
     }
 

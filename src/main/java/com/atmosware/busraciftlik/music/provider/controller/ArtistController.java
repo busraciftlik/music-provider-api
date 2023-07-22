@@ -3,9 +3,9 @@ package com.atmosware.busraciftlik.music.provider.controller;
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.AlbumRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
-import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -35,7 +34,7 @@ public class ArtistController {
     }
 
     @PutMapping("/update")
-    public Artist update(@RequestBody Artist artist){
+    public ArtistDto update(@RequestBody Artist artist){
         return service.update(artist);
     }
 
@@ -55,7 +54,7 @@ public class ArtistController {
        return service.addMusic(id,music);
     }
     @PostMapping("/addAlbum/{id}")
-    public Set<AlbumDto> addAlbum(@PathVariable Integer id , @RequestBody Album album){
+    public Set<AlbumDto> addAlbum(@PathVariable Integer id , @RequestBody AlbumRequest album){
         return service.addAlbum(id,album);
     }
 }

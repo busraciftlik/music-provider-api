@@ -20,5 +20,5 @@ public abstract class BaseEntity {
     @UpdateTimestamp
     private LocalDateTime updateDate;
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status = Status.ACTIVE;
 }

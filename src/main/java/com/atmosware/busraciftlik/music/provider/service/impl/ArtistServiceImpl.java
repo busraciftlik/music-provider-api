@@ -3,28 +3,42 @@ package com.atmosware.busraciftlik.music.provider.service.impl;
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.AlbumRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
+import com.atmosware.busraciftlik.music.provider.enums.Status;
 import com.atmosware.busraciftlik.music.provider.repository.ArtistRepository;
+import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.Set;
+
 import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
 
 @Service
 @RequiredArgsConstructor
 public class ArtistServiceImpl implements ArtistService {
     private final ArtistRepository repository;
+    private AlbumService albumService;
 
     @Override
     public Set<ArtistDto> findAll() {
         return mapArtistEntity2ArtistDto(repository.findAll());
     }
+
+    @Override
+    public Artist findById(Integer id) {
+        return repository.findById(id).orElseThrow();
+    }
+
 
     @Override
     public ArtistDto add(CreateArtistRequest request) {
@@ -33,9 +47,17 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Artist update(Artist artist) {
-
-        return null;
+    public ArtistDto update(Artist artist) {
+        Artist exists = repository.findById(artist.getId()).orElseThrow();
+        if (Objects.nonNull(artist.getAlbums())) {
+            exists.getAlbums();
+        }
+        if (Objects.nonNull(artist.getMusics())) {
+            Set<Music> musics = exists.getMusics();
+        }
+        exists.setStatus(Status.INACTIVE);
+        Artist saved = repository.save(exists);
+        return mapArtistEntity2ArtistDto(saved);
     }
 
     @Override
@@ -55,8 +77,9 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Set<AlbumDto> addAlbum(Integer artistId, Album album) {
+    public Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest request) {
         Artist artist = repository.findById(artistId).orElseThrow();
+        Album album = albumService.findById(request.getId());
         Set<Album> albums = artist.getAlbums();
         albums.add(album);
         Artist saved = repository.save(artist);
@@ -69,5 +92,10 @@ public class ArtistServiceImpl implements ArtistService {
         artist.setName(request.getName());
         Artist saved = repository.save(artist);
         return mapArtistEntity2ArtistDto(saved);
+    }
+
+    @Autowired
+    public void setAlbumService(@Lazy AlbumService albumService) {
+        this.albumService = albumService;
     }
 }

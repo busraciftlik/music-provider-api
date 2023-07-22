@@ -10,5 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AlbumRequest {
-    private String name;
+    private Integer id;
 }

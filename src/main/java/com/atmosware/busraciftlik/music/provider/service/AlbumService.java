@@ -9,6 +9,7 @@ import java.util.Set;
 
 public interface AlbumService  {
     Set<AlbumDto> findAll();
+    Album findById(Integer id);
 
     AlbumDto add(CreateAlbumRequest request);
 

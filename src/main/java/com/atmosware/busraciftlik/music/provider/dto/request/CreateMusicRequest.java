@@ -13,4 +13,5 @@ import lombok.Setter;
 public class CreateMusicRequest {
     private String name;
     private Genre genre;
+    private Integer artistId;
 }
