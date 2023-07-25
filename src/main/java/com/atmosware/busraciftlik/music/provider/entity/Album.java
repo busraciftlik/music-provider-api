@@ -31,6 +31,7 @@ public class Album extends BaseEntity {
     private LocalDate releaseDate;
     @JsonManagedReference
     @OneToMany
+    @Builder.Default
     private Set<Music> musics  = new HashSet<>();
     @ManyToOne
     private Artist artist;

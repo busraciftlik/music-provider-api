@@ -2,7 +2,6 @@ package com.atmosware.busraciftlik.music.provider.service.impl;
 
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
-import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.enums.Genre;
@@ -31,24 +30,32 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
+    public Set<Music> findAllByIdsAndArtistId(List<Integer> ids , Integer artistId) {
+
+        return repository.findAllByIdInAndArtistIdAndStatus(ids, artistId,Status.ACTIVE);
+    }
+
+    @Override
     public Set<Music> findAllByIds(List<Integer> ids) {
-        for (Integer id : ids) {
-            rule.checkIfMusicExists(id);
-        }
-        return repository.findAllByIdInAndStatus(ids, Status.ACTIVE);
+        return repository.findAllByIdInAndStatus(ids,Status.ACTIVE);
+    }
+
+    @Override
+    public Music findById(Integer id) {
+        return repository.findById(id).orElseThrow();
     }
 
     @Override
     public MusicDto add(CreateMusicRequest request) {
-        Artist artist = artistService.findById(request.getArtistId());
+        Artist artist = artistService.getById(request.getArtistId());
         Music saved = repository.save(Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build());
         return mapMusicEntity2MusicDto(saved);
 
     }
 
     @Override
-    public Music update(Music music) {
-        Music exists = repository.findById(music.getId()).orElseThrow();
+    public Music update(Integer id,Music music) {
+        Music exists = repository.findById(id).orElseThrow();
         exists.setName(music.getName());
         exists.setAlbum(music.getAlbum());
         exists.setArtist(music.getArtist());

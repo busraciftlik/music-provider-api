@@ -33,9 +33,9 @@ public class ArtistController {
         return service.findAll();
     }
 
-    @PutMapping("/update")
-    public ArtistDto update(@RequestBody Artist artist){
-        return service.update(artist);
+    @PutMapping("/{id}")
+    public ArtistDto update(@PathVariable Integer id,@RequestBody Artist artist){
+        return service.update(id,artist);
     }
 
     @PutMapping("/updateName/{id}")
@@ -49,12 +49,12 @@ public class ArtistController {
         return service.delete(id);
     }
 
-    @PostMapping("/addMusic/{id}")
-    public Set<MusicDto> addMusic(@PathVariable Integer id, @RequestBody Music music){
-       return service.addMusic(id,music);
+    @PostMapping("/addMusic/{artistId}")
+    public Set<MusicDto> addMusic(@PathVariable Integer artistId, @RequestBody Music music){
+       return service.addMusic(artistId,music);
     }
-    @PostMapping("/addAlbum/{id}")
-    public Set<AlbumDto> addAlbum(@PathVariable Integer id , @RequestBody AlbumRequest album){
-        return service.addAlbum(id,album);
+    @PostMapping("/addAlbum/{artistId}")
+    public Set<AlbumDto> addAlbum(@PathVariable Integer artistId, @RequestBody AlbumRequest album){
+        return service.addAlbum(artistId,album);
     }
 }

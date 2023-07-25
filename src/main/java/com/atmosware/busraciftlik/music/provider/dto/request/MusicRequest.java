@@ -1,5 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.dto.request;
 
+import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.enums.Genre;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,4 +14,5 @@ import lombok.Setter;
 public class MusicRequest {
     private String name;
     private Genre genre;
+    private Artist artist;
 }

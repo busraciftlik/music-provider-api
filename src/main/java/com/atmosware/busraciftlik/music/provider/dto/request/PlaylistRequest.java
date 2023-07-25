@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AlbumRequest {
-    private String name;
+public class PlaylistRequest {
+    private List<Integer> musicIds;
 }

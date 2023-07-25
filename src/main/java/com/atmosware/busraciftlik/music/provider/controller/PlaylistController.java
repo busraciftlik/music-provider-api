@@ -1,13 +1,13 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
 import com.atmosware.busraciftlik.music.provider.dto.PlaylistDto;
+import com.atmosware.busraciftlik.music.provider.dto.request.PlaylistRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Playlist;
 import com.atmosware.busraciftlik.music.provider.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -18,18 +18,25 @@ public class PlaylistController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public Playlist add(@RequestBody Playlist playlist){
-       return service.add(playlist);
+    public PlaylistDto add(@RequestBody PlaylistRequest request){
+       return service.add(request);
     }
+
+    @PostMapping("/addMusic")
+    public PlaylistDto addMusic(@RequestBody PlaylistRequest request){
+        return service.add(request);
+    }
+
+
 
     @GetMapping("/getAll")
     public Set<PlaylistDto> findAll(){
         return service.findAll();
     }
 
-    @PutMapping("/update")
-    public Playlist update(@RequestBody Playlist playlist){
-        return service.update(playlist);
+    @PutMapping("/update/{id}")
+    public PlaylistDto update(@PathVariable Integer id , @RequestBody PlaylistRequest request){
+        return service.update(id,request);
     }
 
     @DeleteMapping("/{id}")

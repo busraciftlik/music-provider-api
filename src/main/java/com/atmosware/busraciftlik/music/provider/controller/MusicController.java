@@ -44,8 +44,8 @@ public class MusicController {
     }
 
     @PutMapping("/update")
-    public Music update(@RequestBody Music music) {
-        return service.update(music);
+    public Music update(@PathVariable Integer id,@RequestBody Music music) {
+        return service.update(id,music);
     }
 
     @DeleteMapping("/{id}")

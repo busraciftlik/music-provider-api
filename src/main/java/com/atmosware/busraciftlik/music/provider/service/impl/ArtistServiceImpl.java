@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
@@ -42,7 +41,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public Artist findById(Integer id) {
+    public Artist getById(Integer id) {
         return repository.findById(id).orElseThrow();
     }
 
@@ -54,15 +53,11 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    public ArtistDto update(Artist artist) {
+    public ArtistDto update(Integer id,Artist artist) {
         Artist exists = repository.findById(artist.getId()).orElseThrow();
-        if (Objects.nonNull(artist.getAlbums())) {
-            exists.getAlbums();
-        }
-        if (Objects.nonNull(artist.getMusics())) {
-            Set<Music> musics = exists.getMusics();
-        }
-        exists.setStatus(Status.INACTIVE);
+        exists.setName(artist.getName());
+        exists.setAlbums(artist.getAlbums());
+        exists.setMusics(artist.getMusics());
         Artist saved = repository.save(exists);
         return mapArtistEntity2ArtistDto(saved);
     }
@@ -86,7 +81,7 @@ public class ArtistServiceImpl implements ArtistService {
     @Override
     public Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest request) {
         Artist artist = repository.findById(artistId).orElseThrow();
-        Album album = albumService.findById(request.getId());
+        Album album = Album.builder().name(request.getName()).build();
         Set<Album> albums = artist.getAlbums();
         albums.add(album);
         Artist saved = repository.save(artist);

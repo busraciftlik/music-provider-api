@@ -11,11 +11,15 @@ import java.util.Set;
 public interface MusicService {
     Set<MusicDto> findAll();
 
+    Set<Music> findAllByIdsAndArtistId(List<Integer> ids, Integer artistId);
+
     Set<Music> findAllByIds(List<Integer> ids);
+
+    Music findById(Integer id);
 
     MusicDto add(CreateMusicRequest request);
 
-    Music update(Music music); // id ekle
+    Music update(Integer id, Music music);
 
     Music delete(Integer id);
 

@@ -23,8 +23,10 @@ import java.util.Set;
 public class Artist extends BaseEntity {
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
+    @Builder.Default
     private Set<Music> musics = new HashSet<>();
     @OneToMany(cascade = CascadeType.ALL)
+    @Builder.Default
     private Set<Album> albums = new HashSet<>();
 
     public void addToMusics(Music music){

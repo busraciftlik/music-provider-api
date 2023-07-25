@@ -15,10 +15,10 @@ public interface ArtistService  {
 
     long count();
     Set<ArtistDto> findAll();
-    Artist findById(Integer id);
+    Artist getById(Integer id);
     ArtistDto add(CreateArtistRequest request);
 
-    ArtistDto update(Artist artist);
+    ArtistDto update(Integer id, Artist artist);
 
     ArtistDto delete(Integer id);
     Set<MusicDto> addMusic(Integer artistId, Music music);

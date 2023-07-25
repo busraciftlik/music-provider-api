@@ -37,6 +37,7 @@ public final class EntityDtoMapper {
         return Optional.ofNullable(album).map(a -> AlbumDto.builder()
                 .id(a.getId())
                 .name(a.getName())
+                .releaseDate(a.getReleaseDate())
                 .artistName(a.getArtist().getName())
                 .musics(mapMusicEntity2MusicDto(a.getMusics()))
                 .build()).orElse(null);
