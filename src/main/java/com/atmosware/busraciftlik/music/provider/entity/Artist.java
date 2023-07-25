@@ -1,10 +1,15 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import java.util.HashSet;
 import java.util.Set;
 @Entity
 @Builder(toBuilder = true)
@@ -13,12 +18,29 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "artists")
-public class Artist extends BaseEntity  {
+@SQLDelete(sql = "UPDATE artists SET status = 'INACTIVE' WHERE id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "status <> 'INACTIVE'")
+public class Artist extends BaseEntity {
     private String name;
-    @OneToMany
-    @Schema(nullable = true)
-    private Set<Music> musics;
-    @OneToMany
-    private Set<Album> albums;
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Music> musics = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private Set<Album> albums = new HashSet<>();
+
+    public void addToMusics(Music music){
+        music.setArtist(this);
+        musics.add(music);
+    }
+
+    public void addToAlbums(Album album){
+        album.setArtist(this);
+        albums.add(album);
+    }
+
+    /*@PreRemove
+    public void deleteArtist(){
+        musics.forEach(music -> music.setStatus(Status.INACTIVE));
+        albums.forEach(album -> album.setStatus(Status.INACTIVE));
+    }*/
 
 }

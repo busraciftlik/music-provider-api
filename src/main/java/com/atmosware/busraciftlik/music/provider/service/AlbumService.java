@@ -3,6 +3,7 @@ package com.atmosware.busraciftlik.music.provider.service;
 
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
+import com.atmosware.busraciftlik.music.provider.dto.request.UpdateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 
 import java.util.Set;
@@ -13,7 +14,7 @@ public interface AlbumService  {
 
     AlbumDto add(CreateAlbumRequest request);
 
-    Album update(Album album);
+    AlbumDto update(Integer id,UpdateAlbumRequest request);
 
-    Album delete(Integer id);
+    AlbumDto delete(Integer id);
 }

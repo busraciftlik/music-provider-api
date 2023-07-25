@@ -1,5 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
+import com.atmosware.busraciftlik.music.provider.dto.PlaylistDto;
 import com.atmosware.busraciftlik.music.provider.entity.Playlist;
 import com.atmosware.busraciftlik.music.provider.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/playlist")
@@ -21,7 +23,7 @@ public class PlaylistController {
     }
 
     @GetMapping("/getAll")
-    public List<Playlist> findAll(){
+    public Set<PlaylistDto> findAll(){
         return service.findAll();
     }
 

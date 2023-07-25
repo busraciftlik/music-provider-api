@@ -4,6 +4,9 @@ import com.atmosware.busraciftlik.music.provider.enums.Genre;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Builder(toBuilder = true)
@@ -12,6 +15,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "musics")
+@SQLDelete(sql = "UPDATE musics SET status = 'INACTIVE' WHERE id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "status <> 'INACTIVE'")
 public class Music extends BaseEntity {
     private String name;
     @ManyToOne

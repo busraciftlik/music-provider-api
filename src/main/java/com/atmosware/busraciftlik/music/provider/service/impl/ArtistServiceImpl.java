@@ -17,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -28,6 +30,11 @@ import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
 public class ArtistServiceImpl implements ArtistService {
     private final ArtistRepository repository;
     private AlbumService albumService;
+
+    @Override
+    public long count() {
+        return repository.count();
+    }
 
     @Override
     public Set<ArtistDto> findAll() {
@@ -97,5 +104,10 @@ public class ArtistServiceImpl implements ArtistService {
     @Autowired
     public void setAlbumService(@Lazy AlbumService albumService) {
         this.albumService = albumService;
+    }
+
+    @Transactional
+    public void saveAllForJpaRepository(List<Artist> artists) {
+        repository.saveAll(artists);
     }
 }

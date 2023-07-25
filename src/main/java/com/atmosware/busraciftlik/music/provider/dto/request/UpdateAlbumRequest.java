@@ -1,11 +1,12 @@
 package com.atmosware.busraciftlik.music.provider.dto.request;
 
+import com.atmosware.busraciftlik.music.provider.entity.Music;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -13,10 +14,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UpdateAlbumRequest {
     private String name;
-    private LocalDate releaseDate;
-    //UpdateArtistNameRequest artist;
-    //music list
-
-
+    private List<Integer> musicIds;
+    private Integer artistId;
 
 }

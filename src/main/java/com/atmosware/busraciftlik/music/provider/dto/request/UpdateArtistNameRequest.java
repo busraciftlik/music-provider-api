@@ -9,8 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateArtistNameRequest {
-//    @NotNull
-//    private Integer id;
     @NotBlank
     private String name;
 }

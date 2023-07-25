@@ -13,6 +13,6 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "playlists")
 public class Playlist extends BaseEntity {
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Music> musics;
 }

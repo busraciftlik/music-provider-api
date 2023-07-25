@@ -2,6 +2,7 @@ package com.atmosware.busraciftlik.music.provider.controller;
 
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
+import com.atmosware.busraciftlik.music.provider.dto.request.UpdateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,14 @@ public class AlbumController {
         return service.findAll();
     }
 
-    @PutMapping("/update")
-    public Album update(@RequestBody Album album){
-       return service.update(album);
+    @PutMapping("/update/{id}")
+    public AlbumDto update(@PathVariable Integer id,@RequestBody UpdateAlbumRequest request){
+       return service.update(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Album delete(@PathVariable Integer id){
+    public AlbumDto delete(@PathVariable Integer id){
         return service.delete(id);
     }
 

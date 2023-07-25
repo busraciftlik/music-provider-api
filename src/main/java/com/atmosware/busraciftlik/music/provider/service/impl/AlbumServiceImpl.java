@@ -2,6 +2,7 @@ package com.atmosware.busraciftlik.music.provider.service.impl;
 
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
+import com.atmosware.busraciftlik.music.provider.dto.request.UpdateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.repository.AlbumRepository;
@@ -10,8 +11,6 @@ import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
-import java.util.List;
 import java.util.Set;
 
 import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
@@ -39,15 +38,17 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public Album update(Album album) {
+    public AlbumDto update(Integer id, UpdateAlbumRequest request) {
+        Album album = repository.findById(id).orElseThrow();
+        album.setName(request.getName());
 
         return null;
     }
 
     @Override
-    public Album delete(Integer id) {
+    public AlbumDto delete(Integer id) {
         Album album = repository.findById(id).orElseThrow();
         repository.deleteById(id);
-        return album;
+        return mapAlbumEntity2AlbumDto(album);
     }
 }

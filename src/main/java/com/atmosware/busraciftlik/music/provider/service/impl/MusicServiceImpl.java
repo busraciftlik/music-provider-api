@@ -5,8 +5,10 @@ import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
+import com.atmosware.busraciftlik.music.provider.enums.Genre;
 import com.atmosware.busraciftlik.music.provider.enums.Status;
 import com.atmosware.busraciftlik.music.provider.repository.MusicRepository;
+import com.atmosware.busraciftlik.music.provider.rule.MusicBusinessRule;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
 public class MusicServiceImpl implements MusicService {
     private final MusicRepository repository;
     private final ArtistService artistService;
+    private final MusicBusinessRule rule;
 
     @Override
     public Set<MusicDto> findAll() {
@@ -29,6 +32,9 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public Set<Music> findAllByIds(List<Integer> ids) {
+        for (Integer id : ids) {
+            rule.checkIfMusicExists(id);
+        }
         return repository.findAllByIdInAndStatus(ids, Status.ACTIVE);
     }
 
@@ -51,15 +57,28 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public Music delete(Integer id) {
+        rule.checkIfMusicExists(id);
         Music music = repository.findById(id).orElseThrow();
         repository.deleteById(id);
         return music;
     }
 
     @Override
-    public Set<MusicDto> addAlbum(Integer musicId, Album album) {
+    public Set<MusicDto> searchMusicsByAlbum(String albumName) {
+        Set<Music> musics = repository.findAllMusicsByAlbumName(albumName);
+        return mapMusicEntity2MusicDto(musics);
+    }
 
-        return null;
+    @Override
+    public Set<MusicDto> searchMusicsByArtist(String artisName) {
+        Set<Music> musics = repository.findMusicByArtistName(artisName);
+        return mapMusicEntity2MusicDto(musics);
+    }
+
+    @Override
+    public Set<MusicDto> searchMusicsByGenre(Genre genre) {
+        Set<Music> musics = repository.findMusicByGenre(genre);
+        return mapMusicEntity2MusicDto(musics);
     }
 
 }

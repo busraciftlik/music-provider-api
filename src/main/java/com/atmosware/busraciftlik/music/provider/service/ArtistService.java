@@ -12,6 +12,8 @@ import com.atmosware.busraciftlik.music.provider.entity.Music;
 import java.util.Set;
 
 public interface ArtistService  {
+
+    long count();
     Set<ArtistDto> findAll();
     Artist findById(Integer id);
     ArtistDto add(CreateArtistRequest request);
