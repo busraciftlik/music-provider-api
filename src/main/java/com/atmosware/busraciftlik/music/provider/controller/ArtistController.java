@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/artist")
+@RequestMapping("/api/v1/artist")
 @RequiredArgsConstructor
 public class ArtistController {
     private final ArtistService service;
