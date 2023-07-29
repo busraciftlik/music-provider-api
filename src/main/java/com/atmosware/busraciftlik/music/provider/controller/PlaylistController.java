@@ -34,7 +34,7 @@ public class PlaylistController {
         return service.findAll();
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public PlaylistDto update(@PathVariable Integer id , @RequestBody PlaylistRequest request){
         return service.update(id,request);
     }

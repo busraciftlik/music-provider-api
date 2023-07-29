@@ -17,7 +17,7 @@ import java.util.Set;
 public class MusicController {
     private final MusicService service;
 
-    @PostMapping
+    @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public MusicDto add(@RequestBody CreateMusicRequest request) {
         return service.add(request);
@@ -43,7 +43,7 @@ public class MusicController {
         return service.searchMusicsByGenre(genre);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/{id}")
     public Music update(@PathVariable Integer id,@RequestBody Music music) {
         return service.update(id,music);
     }

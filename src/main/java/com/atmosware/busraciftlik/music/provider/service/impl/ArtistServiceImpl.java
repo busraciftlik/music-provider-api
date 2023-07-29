@@ -9,7 +9,8 @@ import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameReq
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
-import com.atmosware.busraciftlik.music.provider.enums.Status;
+import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
+import com.atmosware.busraciftlik.music.provider.exception.constant.Message;
 import com.atmosware.busraciftlik.music.provider.repository.ArtistRepository;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
@@ -80,7 +81,7 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest request) {
-        Artist artist = repository.findById(artistId).orElseThrow();
+        Artist artist = repository.findById(artistId).orElseThrow(()->new BusinessException(Message.Artist.NOT_EXISTS));
         Album album = Album.builder().name(request.getName()).build();
         Set<Album> albums = artist.getAlbums();
         albums.add(album);

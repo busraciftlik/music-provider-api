@@ -1,7 +1,7 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -11,9 +11,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user_music_likes")
-public class UserMusicLike extends BaseEntity {
-    private Integer user;
-    @OneToOne
+@Table(name = "favorites")
+public class Favorite extends BaseEntity {
+    @ManyToOne
+    private User user;
+    @ManyToOne
     private Music music;
 }

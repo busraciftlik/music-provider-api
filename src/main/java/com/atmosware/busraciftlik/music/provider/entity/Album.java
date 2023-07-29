@@ -1,8 +1,5 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
-import com.atmosware.busraciftlik.music.provider.entity.Artist;
-import com.atmosware.busraciftlik.music.provider.entity.BaseEntity;
-import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -32,11 +29,11 @@ public class Album extends BaseEntity {
     @JsonManagedReference
     @OneToMany
     @Builder.Default
-    private Set<Music> musics  = new HashSet<>();
+    private Set<Music> musics = new HashSet<>();
     @ManyToOne
     private Artist artist;
 
-    public void addToMusics(Music music){
+    public void addToMusics(Music music) {
         music.setAlbum(this);
         musics.add(music);
     }

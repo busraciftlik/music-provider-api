@@ -6,8 +6,9 @@ import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.enums.Genre;
 import com.atmosware.busraciftlik.music.provider.enums.Status;
+import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
+import com.atmosware.busraciftlik.music.provider.exception.constant.Message;
 import com.atmosware.busraciftlik.music.provider.repository.MusicRepository;
-import com.atmosware.busraciftlik.music.provider.rule.MusicBusinessRule;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,6 @@ import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
 public class MusicServiceImpl implements MusicService {
     private final MusicRepository repository;
     private final ArtistService artistService;
-    private final MusicBusinessRule rule;
 
     @Override
     public Set<MusicDto> findAll() {
@@ -42,7 +42,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public Music findById(Integer id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(()->new BusinessException(Message.Music.NOT_EXISTS));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public Music update(Integer id,Music music) {
-        Music exists = repository.findById(id).orElseThrow();
+        Music exists = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Music.NOT_EXISTS));
         exists.setName(music.getName());
         exists.setAlbum(music.getAlbum());
         exists.setArtist(music.getArtist());
@@ -64,8 +64,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public Music delete(Integer id) {
-        rule.checkIfMusicExists(id);
-        Music music = repository.findById(id).orElseThrow();
+        Music music = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Music.NOT_EXISTS));
         repository.deleteById(id);
         return music;
     }

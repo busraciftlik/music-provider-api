@@ -2,12 +2,12 @@ package com.atmosware.busraciftlik.music.provider.service.impl;
 
 import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateAlbumRequest;
-import com.atmosware.busraciftlik.music.provider.dto.request.MusicRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.UpdateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
+import com.atmosware.busraciftlik.music.provider.exception.constant.Message;
 import com.atmosware.busraciftlik.music.provider.repository.AlbumRepository;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
@@ -44,7 +44,7 @@ public class AlbumServiceImpl implements AlbumService {
     public AlbumDto add(CreateAlbumRequest request) {
         Set<Music> musics = musicService.findAllByIdsAndArtistId(request.getMusicIds(), request.getArtistId());
         if (musics.size() != request.getMusicIds().size()) {
-            throw new BusinessException("Girilen bilgiler hatalıdır");
+            throw new BusinessException(Message.Album.INVALID_REQUEST);
         }
         Artist artist = artistService.getById(request.getArtistId());
         final Album album = Album.builder()
@@ -60,21 +60,21 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumDto update(Integer id, UpdateAlbumRequest request) {
-        Album album = repository.findById(id).orElseThrow(()-> new BusinessException("Bu id'ye sahip bir album yok "));
+        Album album = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         album.setName(request.getName());
         return mapAlbumEntity2AlbumDto(repository.save(album));
     }
 
     @Override
     public AlbumDto delete(Integer id) {
-        Album album = repository.findById(id).orElseThrow();
+        Album album = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         repository.deleteById(id);
         return mapAlbumEntity2AlbumDto(album);
     }
 
     @Override
     public AlbumDto addMusic(Integer albumId, Integer musicId) {
-        Album album = repository.findById(albumId).orElseThrow();
+        Album album = repository.findById(albumId).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         final Music music = musicService.findById(musicId);
         album.addToMusics(music);
         return mapAlbumEntity2AlbumDto(repository.save(album));

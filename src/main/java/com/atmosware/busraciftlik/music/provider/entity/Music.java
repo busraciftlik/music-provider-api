@@ -22,7 +22,7 @@ public class Music extends BaseEntity {
     @ManyToOne
     private Artist artist;
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne ///(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Album album;
     @Enumerated(EnumType.STRING)
     private Genre genre;

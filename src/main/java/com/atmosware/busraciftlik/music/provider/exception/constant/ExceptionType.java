@@ -1,4 +1,4 @@
-package com.atmosware.busraciftlik.music.provider.exception;
+package com.atmosware.busraciftlik.music.provider.exception.constant;
 
 public class ExceptionType {
     public static class Exception{

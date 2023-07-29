@@ -1,6 +1,5 @@
 package com.atmosware.busraciftlik.music.provider.dto.request;
 
-import com.atmosware.busraciftlik.music.provider.entity.Music;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

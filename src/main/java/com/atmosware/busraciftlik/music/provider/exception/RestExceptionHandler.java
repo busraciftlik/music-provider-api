@@ -1,5 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.exception;
 
+import com.atmosware.busraciftlik.music.provider.exception.constant.ExceptionType;
 import jakarta.validation.ValidationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;

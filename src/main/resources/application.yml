@@ -1,0 +1,26 @@
+api:
+  author:
+    website: https://github.com/busraciftlik
+    email: busraciftlik96@gmail.com
+    name: Busra Ciftlik
+  description: This is an API that serves songs to users. In addition to regular users,
+    the admin user can also perform song, artist, and album management tasks. It is
+    a project developed during the internship period at Atmosware company.
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: 'false'
+      javax:
+        persistence:
+          validation:
+            mode: none
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: 'false'
+  datasource:
+    password: '12345'
+    username: postgres
+    url: jdbc:postgresql://localhost:5432/music-db
+
