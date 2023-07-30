@@ -1,15 +1,10 @@
 package com.atmosware.busraciftlik.music.provider.util;
 
-import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
-import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
-import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
-import com.atmosware.busraciftlik.music.provider.dto.PlaylistDto;
-import com.atmosware.busraciftlik.music.provider.entity.Album;
-import com.atmosware.busraciftlik.music.provider.entity.Artist;
-import com.atmosware.busraciftlik.music.provider.entity.Music;
-import com.atmosware.busraciftlik.music.provider.entity.Playlist;
+import com.atmosware.busraciftlik.music.provider.dto.*;
+import com.atmosware.busraciftlik.music.provider.entity.*;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -73,6 +68,18 @@ public final class EntityDtoMapper {
     public static Set<PlaylistDto> mapPlaylistEntity2PlaylistDto(Collection<Playlist> playlists) {
         return Optional.ofNullable(playlists).map(p -> p.stream().map(EntityDtoMapper::mapPlaylistEntity2PlaylistDto).collect(Collectors.toSet()))
                 .orElse(null);
+    }
+
+    public static UserDto mapUserEntity2UserDto(User user) {
+        return Optional.ofNullable(user).map(u -> UserDto.builder()
+                .firstName(u.getFirstname())
+                .lastName(u.getLastname())
+                .build()).orElse(null);
+    }
+
+    public static Set<UserDto> mapUserEntity2UserDto(Collection<User> users) {
+        return Optional.ofNullable(users).map(userCollection -> userCollection.stream().map(EntityDtoMapper::mapUserEntity2UserDto).collect(Collectors.toSet()))
+                .orElse(Collections.emptySet());
     }
 
 }

@@ -1,12 +1,11 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
-import com.atmosware.busraciftlik.music.provider.entity.Favorite;
 import com.atmosware.busraciftlik.music.provider.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,13 +15,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User implements UserDetails {
+@SQLDelete(sql = "UPDATE users SET status = 'INACTIVE' WHERE id = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "status <> 'INACTIVE'")
+public class User extends BaseEntity implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
@@ -34,6 +36,21 @@ public class User implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Favorite> favorites = new HashSet<>();
+    @OneToMany
+    private Set<User> followers = new HashSet<>();
+    @OneToMany
+    private Set<User> followings = new HashSet<>();
+
+
+    public void addFollowing(User following){
+        followings.add(following);
+        following.followers.add(this);
+
+    }
+    public void addFollowers(User follower){
+        followers.add(follower);
+        follower.followings.add(this);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

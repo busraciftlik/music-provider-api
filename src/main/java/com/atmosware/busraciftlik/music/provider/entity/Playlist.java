@@ -15,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "playlists")
-@SQLDelete(sql = "UPDATE albums SET status = 'INACTIVE' WHERE id = ?", check = ResultCheckStyle.COUNT)
+@SQLDelete(sql = "UPDATE playlists SET status = 'INACTIVE' WHERE id = ?", check = ResultCheckStyle.COUNT)
 @Where(clause = "status <> 'INACTIVE'")
 public class Playlist extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL)
