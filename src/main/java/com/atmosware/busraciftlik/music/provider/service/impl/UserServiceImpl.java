@@ -5,13 +5,18 @@ import com.atmosware.busraciftlik.music.provider.entity.User;
 import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
 import com.atmosware.busraciftlik.music.provider.repository.UserRepository;
 import com.atmosware.busraciftlik.music.provider.service.UserService;
+import com.atmosware.busraciftlik.music.provider.service.security.JwtService;
 import com.atmosware.busraciftlik.music.provider.util.constant.Message;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.mapUserEntity2UserDto;
@@ -21,6 +26,7 @@ import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.map
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserDetailsService, UserService {
     private final UserRepository repository;
+    private final JwtService jwtService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,7 +34,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .orElseThrow(() -> new UsernameNotFoundException(Message.User.NOT_EXISTS));
     }
 
-    public Set<UserDto> findAll(){
+    public List<UserDto> findAll() {
         return mapUserEntity2UserDto(repository.findAll());
     }
 
@@ -38,12 +44,17 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     public void follow(Integer followed) {
+        // TODO: 31.07.2023
+        final User follower = jwtService.extractUserDetailsFromContext();
+        final User user = repository.findById(follower.getId()).get();
         User followedUser = repository.findById(followed).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
-        followedUser.addFollowing(followedUser);
-        repository.save(followedUser);
+        user.addFollowing(followedUser);
+        repository.save(user);
     }
 
-    public void unfollow(Integer follower,Integer followed){
+
+
+    public void unfollow(Integer follower, Integer followed) {
         User followedUser = repository.findById(followed).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
         User followerUser = repository.findById(follower).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
         Set<User> followers = followedUser.getFollowers();
@@ -55,12 +66,13 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     }
 
-    public Set<UserDto> findFollowers(Integer userId) {
+    public List<UserDto> findFollowers(Integer userId) {
         User user = repository.findById(userId).orElseThrow();
         Set<User> followers = user.getFollowers();
         return mapUserEntity2UserDto(followers);
     }
-    public Set<UserDto> findFollowings(Integer userId) {
+
+    public List<UserDto> findFollowings(Integer userId) {
         User user = repository.findById(userId).orElseThrow();
         Set<User> followings = user.getFollowings();
         return mapUserEntity2UserDto(followings);

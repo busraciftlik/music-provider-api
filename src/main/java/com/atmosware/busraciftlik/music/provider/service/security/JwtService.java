@@ -1,18 +1,19 @@
 package com.atmosware.busraciftlik.music.provider.service.security;
 
+import com.atmosware.busraciftlik.music.provider.entity.User;
+import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -68,5 +69,14 @@ public class JwtService {
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public User extractUserDetailsFromContext() {
+        Optional<Authentication> authentication = Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication());
+        final Object principal = authentication.orElseThrow(() -> new BusinessException("403 Unauthorized")).getPrincipal();
+        if (principal instanceof User user) {
+            return user;
+        }
+        throw new BusinessException("403 Unauthorized");
     }
 }

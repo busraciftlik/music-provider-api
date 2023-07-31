@@ -2,11 +2,12 @@ package com.atmosware.busraciftlik.music.provider.controller;
 
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateMusicRequest;
+import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.enums.Genre;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
-import com.atmosware.busraciftlik.music.provider.entity.Music;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -18,9 +19,8 @@ public class MusicController {
     private final MusicService service;
 
     @PostMapping("/add")
-    @ResponseStatus(HttpStatus.CREATED)
-    public MusicDto add(@RequestBody CreateMusicRequest request) {
-        return service.add(request);
+    public ResponseEntity<MusicDto> add(@RequestBody CreateMusicRequest request) {
+        return new ResponseEntity<>(service.add(request), HttpStatus.CREATED);
     }
 
     @GetMapping("/getAll")
@@ -29,23 +29,23 @@ public class MusicController {
     }
 
     @GetMapping("/byAlbum")
-    public Set<MusicDto> findMusicsByAlbum(@RequestParam String albumName){
-       return service.searchMusicsByAlbum(albumName);
+    public Set<MusicDto> findMusicsByAlbum(@RequestParam String albumName) {
+        return service.searchMusicsByAlbum(albumName);
     }
 
     @GetMapping("/byArtist")
-    public Set<MusicDto> findMusicsByArtist(@RequestParam String artistName){
+    public Set<MusicDto> findMusicsByArtist(@RequestParam String artistName) {
         return service.searchMusicsByArtist(artistName);
     }
 
     @GetMapping("/byGenre")
-    public Set<MusicDto> findMusicsByGenre(@RequestParam Genre genre){
+    public Set<MusicDto> findMusicsByGenre(@RequestParam Genre genre) {
         return service.searchMusicsByGenre(genre);
     }
 
     @PutMapping("/{id}")
-    public Music update(@PathVariable Integer id,@RequestBody Music music) {
-        return service.update(id,music);
+    public Music update(@PathVariable Integer id, @RequestBody Music music) {
+        return service.update(id, music);
     }
 
     @DeleteMapping("/{id}")

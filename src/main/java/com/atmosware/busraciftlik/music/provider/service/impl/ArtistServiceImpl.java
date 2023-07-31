@@ -80,6 +80,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
+    // TODO: 1.08.2023  
     public Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest request) {
         Artist artist = repository.findById(artistId).orElseThrow(()->new BusinessException(Message.Artist.NOT_EXISTS));
         Album album = Album.builder().name(request.getName()).build();

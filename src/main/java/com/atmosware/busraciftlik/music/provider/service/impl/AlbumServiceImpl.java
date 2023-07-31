@@ -73,6 +73,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    // TODO: 1.08.2023  
     public AlbumDto addMusic(Integer albumId, Integer musicId) {
         Album album = repository.findById(albumId).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         final Music music = musicService.findById(musicId);

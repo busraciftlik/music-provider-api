@@ -4,10 +4,11 @@ import com.atmosware.busraciftlik.music.provider.dto.UserDto;
 import com.atmosware.busraciftlik.music.provider.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService extends UserDetailsService {
-    Set<UserDto> findAll();
+    List<UserDto> findAll();
 
     User findById(Integer id);
 
@@ -15,7 +16,7 @@ public interface UserService extends UserDetailsService {
 
     void unfollow(Integer follower,Integer followed);
 
-    Set<UserDto> findFollowers(Integer userId);
+    List<UserDto> findFollowers(Integer userId);
 
-    Set<UserDto> findFollowings(Integer userId);
+    List<UserDto> findFollowings(Integer userId);
 }

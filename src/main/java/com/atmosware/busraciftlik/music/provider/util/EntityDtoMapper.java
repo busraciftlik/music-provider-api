@@ -3,10 +3,7 @@ package com.atmosware.busraciftlik.music.provider.util;
 import com.atmosware.busraciftlik.music.provider.dto.*;
 import com.atmosware.busraciftlik.music.provider.entity.*;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class EntityDtoMapper {
@@ -72,14 +69,21 @@ public final class EntityDtoMapper {
 
     public static UserDto mapUserEntity2UserDto(User user) {
         return Optional.ofNullable(user).map(u -> UserDto.builder()
+                .id(u.getId())
                 .firstName(u.getFirstname())
                 .lastName(u.getLastname())
                 .build()).orElse(null);
     }
 
-    public static Set<UserDto> mapUserEntity2UserDto(Collection<User> users) {
-        return Optional.ofNullable(users).map(userCollection -> userCollection.stream().map(EntityDtoMapper::mapUserEntity2UserDto).collect(Collectors.toSet()))
-                .orElse(Collections.emptySet());
+    public static List<UserDto> mapUserEntity2UserDto(Collection<User> users) {
+        return Optional.ofNullable(users).map(userCollection -> userCollection.stream().map(EntityDtoMapper::mapUserEntity2UserDto).collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 
+    public static FavoriteDto mapFavoriteEntity2FavoriteDto(Favorite favorite) {
+        return Optional.ofNullable(favorite).map(f -> FavoriteDto.builder()
+                .id(f.getId())
+                .userId(f.getUser().getId())
+                .musicId(f.getMusic().getId()).build()).orElse(null);
+    }
 }
