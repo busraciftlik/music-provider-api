@@ -7,7 +7,7 @@ import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.enums.Genre;
 import com.atmosware.busraciftlik.music.provider.enums.Status;
 import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
-import com.atmosware.busraciftlik.music.provider.exception.constant.Message;
+import com.atmosware.busraciftlik.music.provider.util.constant.Message;
 import com.atmosware.busraciftlik.music.provider.repository.MusicRepository;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;

@@ -4,6 +4,7 @@ import com.atmosware.busraciftlik.music.provider.dto.request.AuthenticationReque
 import com.atmosware.busraciftlik.music.provider.dto.request.RegisterRequest;
 import com.atmosware.busraciftlik.music.provider.dto.AuthenticationResponse;
 import com.atmosware.busraciftlik.music.provider.service.security.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +20,12 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<AuthenticationResponse> register(@Valid  @RequestBody RegisterRequest registerRequest){
         return ResponseEntity.ok(service.register(registerRequest));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest){
+    public ResponseEntity<AuthenticationResponse> authenticate(@Valid @RequestBody AuthenticationRequest authenticationRequest){
         return ResponseEntity.ok(service.authenticate(authenticationRequest));
     }
 }

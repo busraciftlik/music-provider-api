@@ -8,6 +8,9 @@ import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Builder(toBuilder = true)
 @Getter
@@ -26,4 +29,8 @@ public class Music extends BaseEntity {
     private Album album;
     @Enumerated(EnumType.STRING)
     private Genre genre;
+    @OneToMany
+    private Set<Favorite> favorites = new HashSet<>();
+
+
 }

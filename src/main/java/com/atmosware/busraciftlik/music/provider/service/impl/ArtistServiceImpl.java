@@ -10,7 +10,7 @@ import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
-import com.atmosware.busraciftlik.music.provider.exception.constant.Message;
+import com.atmosware.busraciftlik.music.provider.util.constant.Message;
 import com.atmosware.busraciftlik.music.provider.repository.ArtistRepository;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;

@@ -1,4 +1,4 @@
-package com.atmosware.busraciftlik.music.provider.exception.constant;
+package com.atmosware.busraciftlik.music.provider.util.constant;
 
 public class Message {
     public static class Music {
@@ -12,6 +12,11 @@ public class Message {
 
     public static class Artist {
         public static final String NOT_EXISTS = "ARTIST_NOT_EXISTS";
+    }
+
+    public static class User {
+        public static final String NOT_EXISTS = "USER_NOT_EXISTS";
+
     }
 }
 

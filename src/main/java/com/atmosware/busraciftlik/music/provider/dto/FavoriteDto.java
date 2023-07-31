@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserMusicLikeDto {
-    private Long id;
-    private Long userId;
-    private Long musicId;
+public class FavoriteDto {
+    private Integer id;
+    private Integer userId;
+    private Integer musicId;
 }

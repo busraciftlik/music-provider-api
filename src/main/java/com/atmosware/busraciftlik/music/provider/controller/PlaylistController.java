@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/playlist")
+@RequestMapping("/api/v1/playlist")
 @RequiredArgsConstructor
 public class PlaylistController {
     private final PlaylistService service;

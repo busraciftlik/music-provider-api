@@ -1,12 +1,12 @@
 package com.atmosware.busraciftlik.music.provider.service;
 
-import com.atmosware.busraciftlik.music.provider.dto.UserMusicLikeDto;
+import com.atmosware.busraciftlik.music.provider.dto.FavoriteDto;
 
 
 public interface FavoriteService {
-    UserMusicLikeDto likeMusic(Integer userId,Integer musicId);
+    FavoriteDto likeMusic(Integer userId, Integer musicId);
 
-    UserMusicLikeDto unlikeMusic(Integer userId, Integer musicId);
+    FavoriteDto unlikeMusic(Integer userId, Integer musicId);
 
     int getLikeCount(Integer musicId);
 

@@ -1,11 +1,13 @@
 package com.atmosware.busraciftlik.music.provider.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping()
-public class UserMusicLikeController {
+@RequestMapping("/api/v1/favorite")
+@RequiredArgsConstructor
+public class FavoriteController {
 
 
 }
