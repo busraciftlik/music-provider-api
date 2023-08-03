@@ -20,4 +20,6 @@ import java.util.Set;
 public class Playlist extends BaseEntity {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Music> musics;
+//    @ManyToOne
+//    private User user;
 }

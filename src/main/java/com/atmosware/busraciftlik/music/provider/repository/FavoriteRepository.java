@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface FavoriteRepository extends JpaRepository<Favorite, Integer> {
     List<Music> findByUserId(Integer userId);
 
-    Integer countByMusicLike(Music music);
+    Integer countFavoriteByMusicId(Integer musicId);
 
     Optional<Favorite> findByUserIdAndMusicId(Integer userId, Integer musicId);
 

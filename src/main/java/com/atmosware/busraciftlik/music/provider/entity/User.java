@@ -41,6 +41,8 @@ public class User extends BaseEntity implements UserDetails {
     private Set<User> followers = new HashSet<>();
     @ManyToMany
     private Set<User> followings = new HashSet<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    private Set<Playlist> playlists = new HashSet<>();
 
 
     public void addFollowing(User following){
