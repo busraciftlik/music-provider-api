@@ -37,9 +37,9 @@ public class User extends BaseEntity implements UserDetails {
     private Role role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Favorite> favorites = new HashSet<>();
-    @OneToMany
+    @ManyToMany
     private Set<User> followers = new HashSet<>();
-    @OneToMany
+    @ManyToMany
     private Set<User> followings = new HashSet<>();
 
 

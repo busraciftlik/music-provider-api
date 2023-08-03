@@ -16,6 +16,7 @@ public class UserController {
     private final UserServiceImpl service;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDto> findAll(){
         return service.findAll();
     }
@@ -26,7 +27,8 @@ public class UserController {
         service.follow(following);
     }
 
-    @PutMapping("/unfollow")
+    @PreAuthorize("hasAuthority('USER')")
+    @GetMapping("/unfollow")
     public void unfollow(Integer followed){
         service.unfollow(followed);
     }

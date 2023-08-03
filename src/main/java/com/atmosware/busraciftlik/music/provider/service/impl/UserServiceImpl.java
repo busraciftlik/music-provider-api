@@ -60,8 +60,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         if (followings.contains(followedUser)) {
             followings.remove(followedUser);
             repository.save(user);
+            final Set<User> followers = followedUser.getFollowers();
+            followers.remove(user);
+            repository.save(followedUser);
         }
-        repository.save(followedUser);
+        throw new BusinessException(Message.User.NOT_EXISTS);
     }
 
     public List<UserDto> findFollowers() {

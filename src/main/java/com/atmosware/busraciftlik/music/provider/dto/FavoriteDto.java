@@ -2,13 +2,10 @@ package com.atmosware.busraciftlik.music.provider.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+import java.io.Serializable;
+
+
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class FavoriteDto {
-    private Integer id;
-    private Integer userId;
-    private Integer musicId;
+public record FavoriteDto(Integer id, Integer userId, Integer musicId) implements Serializable {
+
 }
