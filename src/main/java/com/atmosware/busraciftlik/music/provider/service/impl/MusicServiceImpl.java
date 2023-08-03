@@ -76,7 +76,7 @@ public class MusicServiceImpl implements MusicService {
 
     @Override
     public Set<MusicDto> searchMusicsByAlbum(String albumName) {
-        Set<Music> musics = repository.findAllMusicsByAlbumName(albumName);
+        Set<Music> musics = repository.findMusicByAlbumName(albumName);
         return mapMusicEntity2MusicDto(musics);
     }
 

@@ -2,21 +2,21 @@ version: '3'
 services:
     prometheus:
       image: prom/prometheus
-      container_name: music-provider
+      container_name: music-provider-prometheus
       ports:
         - "9090:9090"
-      volumes:
-        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#      volumes:
+#        - ./prometheus.yml:/etc/prometheus/prometheus.yml
     grafana:
       image: grafana/grafana
-      container_name: music-provider
+      container_name: music-provider-grafana
       ports:
         - "3000:3000"
 #      volumes:
 #        - grafana-storage:/var/lib/grafana
     redis:
       image: redislabs/redismod
-      container_name: music-provider
+      container_name: music-provider-redis
       ports:
         - "6379:6379"
 
