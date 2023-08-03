@@ -14,6 +14,8 @@ import com.atmosware.busraciftlik.music.provider.service.ArtistService;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,6 +32,7 @@ public class AlbumServiceImpl implements AlbumService {
 
 
     @Override
+    @Cacheable(value = "album_set")
     public Set<AlbumDto> findAll() {
         return mapAlbumEntity2AlbumDto(repository.findAll());
     }
@@ -41,6 +44,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "album_set",allEntries = true)
     public AlbumDto add(CreateAlbumRequest request) {
         Set<Music> musics = musicService.findAllByIdsAndArtistId(request.getMusicIds(), request.getArtistId());
         if (musics.size() != request.getMusicIds().size()) {
@@ -59,6 +63,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @CacheEvict(value = "album_set", keyGenerator = "customKeyGenerator")
     public AlbumDto update(Integer id, UpdateAlbumRequest request) {
         Album album = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         album.setName(request.getName());
@@ -66,6 +71,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @CacheEvict(value = "album_set", keyGenerator = "customKeyGenerator")
     public AlbumDto delete(Integer id) {
         Album album = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         repository.deleteById(id);

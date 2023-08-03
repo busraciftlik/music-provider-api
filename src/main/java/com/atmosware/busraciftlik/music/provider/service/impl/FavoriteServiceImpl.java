@@ -46,6 +46,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public int getLikeCount(Integer musicId) {
-        return 0;
+        final Music music = musicService.findById(musicId);
+        return repository.countByMusicLike(music);
     }
 }

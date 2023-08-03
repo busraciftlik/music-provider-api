@@ -14,9 +14,9 @@ public interface UserService extends UserDetailsService {
 
     void follow(Integer followed);
 
-    void unfollow(Integer follower,Integer followed);
+    void unfollow(Integer followed);
 
-    List<UserDto> findFollowers(Integer userId);
+    List<UserDto> findFollowers();
 
-    List<UserDto> findFollowings(Integer userId);
+    List<UserDto> findFollowings();
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/user")
-@PreAuthorize("hasAuthority('USER')")
+@PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     private final UserServiceImpl service;
 
@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PutMapping("/unfollow")
-    public void unfollow(Integer follower, Integer followed){
-        service.unfollow(follower,followed);
+    public void unfollow(Integer followed){
+        service.unfollow(followed);
     }
 }

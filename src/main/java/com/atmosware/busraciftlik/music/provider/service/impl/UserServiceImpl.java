@@ -8,15 +8,13 @@ import com.atmosware.busraciftlik.music.provider.service.UserService;
 import com.atmosware.busraciftlik.music.provider.service.security.JwtService;
 import com.atmosware.busraciftlik.music.provider.util.constant.Message;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.mapUserEntity2UserDto;
@@ -34,6 +32,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
                 .orElseThrow(() -> new UsernameNotFoundException(Message.User.NOT_EXISTS));
     }
 
+    @Override
+    @Cacheable("user_list")
     public List<UserDto> findAll() {
         return mapUserEntity2UserDto(repository.findAll());
     }
@@ -52,30 +52,29 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         repository.save(user);
     }
 
-
-
-    public void unfollow(Integer follower, Integer followed) {
-        User followedUser = repository.findById(followed).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
-        User followerUser = repository.findById(follower).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
-        Set<User> followers = followedUser.getFollowers();
-        Set<User> followings = followerUser.getFollowings();
-        followers.remove(followerUser);
-        followings.remove(followedUser);
+    public void unfollow(Integer followed) {
+        final User follower = jwtService.extractUserDetailsFromContext();
+        final User user = repository.findById(follower.getId()).get();
+        final User followedUser = repository.findById(followed).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
+        final Set<User> followings = user.getFollowings();
+        if (followings.contains(followedUser)) {
+            followings.remove(followedUser);
+            repository.save(user);
+        }
         repository.save(followedUser);
-        repository.save(followerUser);
-
     }
 
-    public List<UserDto> findFollowers(Integer userId) {
-        User user = repository.findById(userId).orElseThrow();
+    public List<UserDto> findFollowers() {
+        final User authenticatedUser = jwtService.extractUserDetailsFromContext();
+        User user = repository.findById(authenticatedUser.getId()).get();
         Set<User> followers = user.getFollowers();
         return mapUserEntity2UserDto(followers);
     }
 
-    public List<UserDto> findFollowings(Integer userId) {
-        User user = repository.findById(userId).orElseThrow();
+    public List<UserDto> findFollowings() {
+        final User authenticatedUser = jwtService.extractUserDetailsFromContext();
+        final User user = repository.findById(authenticatedUser.getId()).get();
         Set<User> followings = user.getFollowings();
         return mapUserEntity2UserDto(followings);
     }
-
 }

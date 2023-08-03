@@ -8,10 +8,13 @@ import com.atmosware.busraciftlik.music.provider.repository.PlaylistRepository;
 import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import com.atmosware.busraciftlik.music.provider.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
-import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
+
+import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.mapPlaylistEntity2PlaylistDto;
 
 
 @Service
@@ -21,6 +24,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     private final MusicService musicService;
 
     @Override
+    @Cacheable("playlist_set")
     public Set<PlaylistDto> findAll() {
         return mapPlaylistEntity2PlaylistDto(repository.findAll());
     }
@@ -31,6 +35,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
+    @CacheEvict(value = "playlist_set", allEntries = true)
     public PlaylistDto add(PlaylistRequest request) {
         Set<Music> musics = musicService.findAllByIds(request.getMusicIds());
         Playlist playlist = Playlist.builder().musics(musics).build();
@@ -39,7 +44,8 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
-    public PlaylistDto update(Integer id,PlaylistRequest request) {
+    @CacheEvict(value = "playlist_set", keyGenerator = "customKeyGenerator")
+    public PlaylistDto update(Integer id, PlaylistRequest request) {
         Playlist playlist = repository.findById(id).orElseThrow();
         Set<Music> musics = musicService.findAllByIds(request.getMusicIds());
         playlist.setMusics(musics);
@@ -48,6 +54,7 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     @Override
+    @CacheEvict(value = "playlist_set", keyGenerator = "customKeyGenerator")
     public Playlist delete(Integer id) {
         Playlist playlist = repository.findById(id).orElseThrow();
         repository.deleteById(id);
@@ -56,7 +63,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     @Override
     public PlaylistDto addMusic(Integer musicId) {
-
+   // TODO: 1.08.2023
         return null;
     }
 }
