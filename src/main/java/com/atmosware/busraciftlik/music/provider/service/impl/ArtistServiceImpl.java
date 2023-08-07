@@ -1,18 +1,13 @@
 package com.atmosware.busraciftlik.music.provider.service.impl;
 
-import com.atmosware.busraciftlik.music.provider.dto.AlbumDto;
 import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
-import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
-import com.atmosware.busraciftlik.music.provider.dto.request.AlbumRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
-import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
-import com.atmosware.busraciftlik.music.provider.entity.Music;
 import com.atmosware.busraciftlik.music.provider.exception.BusinessException;
-import com.atmosware.busraciftlik.music.provider.util.constant.Message;
 import com.atmosware.busraciftlik.music.provider.repository.ArtistRepository;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import com.atmosware.busraciftlik.music.provider.service.ArtistService;
+import com.atmosware.busraciftlik.music.provider.util.constant.Message;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -24,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Set;
 
-import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
+import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.mapArtistEntity2ArtistDto;
 
 @Service
 @RequiredArgsConstructor
@@ -45,11 +40,11 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     public Artist getById(Integer id) {
-        return repository.findById(id).orElseThrow(()-> new BusinessException(Message.Artist.NOT_EXISTS));
+        return repository.findById(id).orElseThrow(() -> new BusinessException(Message.Artist.NOT_EXISTS));
     }
 
     @Override
-    @CacheEvict(value = "artist_set",allEntries = true)
+    @CacheEvict(value = "artist_set", allEntries = true)
     public ArtistDto add(CreateArtistRequest request) {
         Artist saved = repository.save(Artist.builder().name(request.getName()).build());
         return mapArtistEntity2ArtistDto(saved);
@@ -57,7 +52,7 @@ public class ArtistServiceImpl implements ArtistService {
 
     @Override
     @CacheEvict(value = "artist_set", keyGenerator = "customKeyGenerator")
-    public ArtistDto update(Integer id,Artist artist) {
+    public ArtistDto update(Integer id, Artist artist) {
         Artist exists = repository.findById(artist.getId()).orElseThrow();
         exists.setName(artist.getName());
         exists.setAlbums(artist.getAlbums());
@@ -67,7 +62,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    @CacheEvict(value = "artist_set",keyGenerator = "customKeyGenerator")
+    @CacheEvict(value = "artist_set", keyGenerator = "customKeyGenerator")
     public ArtistDto delete(Integer id) {
         Artist artist = repository.findById(id).orElseThrow();
         repository.deleteById(id);

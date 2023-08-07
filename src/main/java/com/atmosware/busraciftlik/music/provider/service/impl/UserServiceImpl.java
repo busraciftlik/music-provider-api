@@ -43,6 +43,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return repository.findById(id).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
     }
 
+    /**
+     * Follows the user with the specified user ID by the current user
+     * @param followed The user ID of the user to be followed
+     * @throws BusinessException If the user with the given ID does not exist
+     */
     public void follow(Integer followed) {
         final User currentUser = jwtService.extractUserDetailsFromContext();
         final User user = repository.findById(currentUser.getId()).orElseThrow();
@@ -51,6 +56,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         repository.save(user);
     }
 
+    /**
+     * Unfollows the user with the specified user ID by the current user
+     * @param followed - The user ID of the user to be unfollowed
+     * @throws BusinessException If the current user or the user to be unfollowed does not exist,
+     * or if the user is not being followed by the current user.
+     */
     public void unfollow(Integer followed) {
         final User currentUser = jwtService.extractUserDetailsFromContext();
         final User user = repository.findById(currentUser.getId()).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
@@ -66,6 +77,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         repository.save(followedUser);
     }
 
+    /**
+     * Finds and returns the followers of the current user
+     * @return A list of {@link UserDto } objects representing the followers of the current user.
+     * If there are no followers, an empty list is returned.
+     */
     public List<UserDto> findFollowers() {
         final User currentUser = jwtService.extractUserDetailsFromContext();
         User user = repository.findById(currentUser.getId()).orElseThrow();
@@ -73,6 +89,11 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return mapUserEntity2UserDto(followers);
     }
 
+    /**
+     * Finds and returns the followings of the current user
+     * A list of {@link UserDto } objects representing the followings of the current user.
+     * If there are no followers, an empty list is returned.
+     */
     public List<UserDto> findFollowings() {
         final User currentUser = jwtService.extractUserDetailsFromContext();
         final User user = repository.findById(currentUser.getId()).orElseThrow();

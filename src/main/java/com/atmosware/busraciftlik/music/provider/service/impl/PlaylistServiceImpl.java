@@ -60,11 +60,4 @@ public class PlaylistServiceImpl implements PlaylistService {
         repository.deleteById(id);
         return playlist;
     }
-
-    @Override
-    public PlaylistDto addMusic(Integer musicId) {
-   //TODO: 1.08.2023
-
-        return null;
-    }
 }

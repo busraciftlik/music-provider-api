@@ -16,5 +16,4 @@ public interface PlaylistService {
 
     Playlist delete(Integer id);
 
-    PlaylistDto addMusic(Integer musicId);
 }
