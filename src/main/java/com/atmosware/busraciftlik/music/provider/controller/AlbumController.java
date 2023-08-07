@@ -6,6 +6,7 @@ import com.atmosware.busraciftlik.music.provider.dto.request.UpdateAlbumRequest;
 import com.atmosware.busraciftlik.music.provider.service.AlbumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -18,6 +19,7 @@ public class AlbumController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ADMIN')")
     public AlbumDto add(@RequestBody CreateAlbumRequest request){
         return service.add(request);
     }
@@ -28,12 +30,14 @@ public class AlbumController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public AlbumDto update(@PathVariable Integer id,@RequestBody UpdateAlbumRequest request){
        return service.update(id,request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     public AlbumDto delete(@PathVariable Integer id){
         return service.delete(id);
     }

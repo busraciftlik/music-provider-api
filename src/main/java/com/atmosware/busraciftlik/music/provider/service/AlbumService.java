@@ -19,5 +19,4 @@ public interface AlbumService {
 
     AlbumDto delete(Integer id);
 
-    AlbumDto addMusic(Integer albumId, Integer musicId);
 }

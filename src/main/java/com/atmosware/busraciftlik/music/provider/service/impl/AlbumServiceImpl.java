@@ -45,6 +45,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     @Transactional
     @CacheEvict(value = "album_set",allEntries = true)
+    // TODO: 5.08.2023 -> veritabanındaki tüm ilişkiler kurulmasına rağmen artist ve müziğe albüm eklenmiyor 
     public AlbumDto add(CreateAlbumRequest request) {
         Set<Music> musics = musicService.findAllByIdsAndArtistId(request.getMusicIds(), request.getArtistId());
         if (musics.size() != request.getMusicIds().size()) {
@@ -78,12 +79,4 @@ public class AlbumServiceImpl implements AlbumService {
         return mapAlbumEntity2AlbumDto(album);
     }
 
-    @Override
-    // TODO: 1.08.2023  
-    public AlbumDto addMusic(Integer albumId, Integer musicId) {
-        Album album = repository.findById(albumId).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
-        final Music music = musicService.findById(musicId);
-        album.addToMusics(music);
-        return mapAlbumEntity2AlbumDto(repository.save(album));
-    }
 }

@@ -8,6 +8,7 @@ import com.atmosware.busraciftlik.music.provider.service.MusicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -19,6 +20,7 @@ public class MusicController {
     private final MusicService service;
 
     @PostMapping("/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MusicDto> add(@RequestBody CreateMusicRequest request) {
         return new ResponseEntity<>(service.add(request), HttpStatus.CREATED);
     }
@@ -44,12 +46,14 @@ public class MusicController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Music update(@PathVariable Integer id, @RequestBody Music music) {
         return service.update(id, music);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ADMIN')")
     public Music delete(@PathVariable Integer id) {
         return service.delete(id);
     }

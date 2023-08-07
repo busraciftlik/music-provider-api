@@ -44,39 +44,38 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     public void follow(Integer followed) {
-        // TODO: 31.07.2023
-        final User follower = jwtService.extractUserDetailsFromContext();
-        final User user = repository.findById(follower.getId()).get();
+        final User currentUser = jwtService.extractUserDetailsFromContext();
+        final User user = repository.findById(currentUser.getId()).orElseThrow();
         User followedUser = repository.findById(followed).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
         user.addFollowing(followedUser);
         repository.save(user);
     }
 
     public void unfollow(Integer followed) {
-        final User follower = jwtService.extractUserDetailsFromContext();
-        final User user = repository.findById(follower.getId()).get();
+        final User currentUser = jwtService.extractUserDetailsFromContext();
+        final User user = repository.findById(currentUser.getId()).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
         final User followedUser = repository.findById(followed).orElseThrow(() -> new BusinessException(Message.User.NOT_EXISTS));
         final Set<User> followings = user.getFollowings();
-        if (followings.contains(followedUser)) {
-            followings.remove(followedUser);
-            repository.save(user);
-            final Set<User> followers = followedUser.getFollowers();
-            followers.remove(user);
-            repository.save(followedUser);
+        if (!followings.contains(followedUser)) {
+            throw new BusinessException(Message.User.NOT_EXISTS);
         }
-        throw new BusinessException(Message.User.NOT_EXISTS);
+        followings.remove(followedUser);
+        repository.save(user);
+        final Set<User> followers = followedUser.getFollowers();
+        followers.remove(user);
+        repository.save(followedUser);
     }
 
     public List<UserDto> findFollowers() {
-        final User authenticatedUser = jwtService.extractUserDetailsFromContext();
-        User user = repository.findById(authenticatedUser.getId()).get();
+        final User currentUser = jwtService.extractUserDetailsFromContext();
+        User user = repository.findById(currentUser.getId()).orElseThrow();
         Set<User> followers = user.getFollowers();
         return mapUserEntity2UserDto(followers);
     }
 
     public List<UserDto> findFollowings() {
-        final User authenticatedUser = jwtService.extractUserDetailsFromContext();
-        final User user = repository.findById(authenticatedUser.getId()).get();
+        final User currentUser = jwtService.extractUserDetailsFromContext();
+        final User user = repository.findById(currentUser.getId()).orElseThrow();
         Set<User> followings = user.getFollowings();
         return mapUserEntity2UserDto(followings);
     }

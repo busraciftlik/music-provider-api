@@ -6,6 +6,7 @@ import com.atmosware.busraciftlik.music.provider.entity.Playlist;
 import com.atmosware.busraciftlik.music.provider.service.PlaylistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -18,30 +19,31 @@ public class PlaylistController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public PlaylistDto add(@RequestBody PlaylistRequest request){
-       return service.add(request);
-    }
-
-    @PostMapping("/addMusic")
-    public PlaylistDto addMusic(@RequestBody PlaylistRequest request){
+    @PreAuthorize("hasRole('ADMIN')")
+    public PlaylistDto add(@RequestBody PlaylistRequest request) {
         return service.add(request);
     }
 
-
+    @PostMapping("/addMusic")
+    public PlaylistDto addMusic(@RequestBody PlaylistRequest request) {
+        return service.add(request);
+    }
 
     @GetMapping("/getAll")
-    public Set<PlaylistDto> findAll(){
+    public Set<PlaylistDto> findAll() {
         return service.findAll();
     }
 
     @PutMapping("/{id}")
-    public PlaylistDto update(@PathVariable Integer id , @RequestBody PlaylistRequest request){
-        return service.update(id,request);
+    @PreAuthorize("hasRole('ADMIN')")
+    public PlaylistDto update(@PathVariable Integer id, @RequestBody PlaylistRequest request) {
+        return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Playlist delete(@PathVariable Integer id){
+    @PreAuthorize("hasRole('ADMIN')")
+    public Playlist delete(@PathVariable Integer id) {
         return service.delete(id);
     }
 }

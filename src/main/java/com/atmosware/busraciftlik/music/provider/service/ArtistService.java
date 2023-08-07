@@ -5,7 +5,6 @@ import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.AlbumRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
-import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
 
@@ -21,9 +20,7 @@ public interface ArtistService  {
     ArtistDto update(Integer id, Artist artist);
 
     ArtistDto delete(Integer id);
-    Set<MusicDto> addMusic(Integer artistId, Music music);
-    Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest album);
-
-    ArtistDto updateArtistName(Integer id, UpdateArtistNameRequest request);
+/*    Set<MusicDto> addMusic(Integer artistId, Music music);
+    Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest album);*/
 
 }

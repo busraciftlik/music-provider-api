@@ -5,7 +5,6 @@ import com.atmosware.busraciftlik.music.provider.entity.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
-import java.util.Set;
 
 public interface UserService extends UserDetailsService {
     List<UserDto> findAll();

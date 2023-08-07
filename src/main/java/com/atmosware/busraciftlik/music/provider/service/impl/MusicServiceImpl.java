@@ -51,8 +51,11 @@ public class MusicServiceImpl implements MusicService {
     @CacheEvict(value = "music_set",allEntries = true)
     public MusicDto add(CreateMusicRequest request) {
         Artist artist = artistService.getById(request.getArtistId());
-        Music saved = repository.save(Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build());
-        return mapMusicEntity2MusicDto(saved);
+        //Music saved = repository.save(Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build());
+        final Music music = Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build();
+        artist.addToMusics(music);
+        artistService.update(artist.getId(), artist);
+        return mapMusicEntity2MusicDto(music);
 
     }
 

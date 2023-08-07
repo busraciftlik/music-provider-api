@@ -22,5 +22,4 @@ public class RegisterRequest {
     private String email;
     @Pattern(regexp = Regex.PASSWORD)
     private String password;
-    private Role role;
 }

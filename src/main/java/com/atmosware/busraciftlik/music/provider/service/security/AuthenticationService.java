@@ -1,11 +1,13 @@
 package com.atmosware.busraciftlik.music.provider.service.security;
 
 import com.atmosware.busraciftlik.music.provider.entity.User;
+import com.atmosware.busraciftlik.music.provider.enums.Role;
 import com.atmosware.busraciftlik.music.provider.repository.UserRepository;
 import com.atmosware.busraciftlik.music.provider.dto.request.AuthenticationRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.RegisterRequest;
 import com.atmosware.busraciftlik.music.provider.dto.AuthenticationResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,13 +22,14 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @CacheEvict(value = "user_list",allEntries = true)
     public AuthenticationResponse register(RegisterRequest registerRequest) {
         var user = User.builder()
                 .firstname(registerRequest.getFirstname())
                 .lastname(registerRequest.getLastname())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
-                .role(registerRequest.getRole())
+                .role(Role.USER)
                 .build();
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);

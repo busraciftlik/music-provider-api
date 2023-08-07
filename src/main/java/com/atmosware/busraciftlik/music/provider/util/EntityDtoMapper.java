@@ -7,7 +7,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public final class EntityDtoMapper {
+    private EntityDtoMapper() {
 
+    }
     public static MusicDto mapMusicEntity2MusicDto(Music music) {
         return Optional.ofNullable(music).map(m -> MusicDto.builder()
                 .id(music.getId())
@@ -85,5 +87,10 @@ public final class EntityDtoMapper {
                 .id(f.getId())
                 .userId(f.getUser().getId())
                 .musicId(f.getMusic().getId()).build()).orElse(null);
+    }
+
+    public static List<FavoriteDto> mapFavoriteEntity2FavoriteDto(Collection<Favorite> favorites){
+        return Optional.ofNullable(favorites).map(f -> f.stream().map(EntityDtoMapper::mapFavoriteEntity2FavoriteDto).collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 }

@@ -5,7 +5,6 @@ import com.atmosware.busraciftlik.music.provider.dto.ArtistDto;
 import com.atmosware.busraciftlik.music.provider.dto.MusicDto;
 import com.atmosware.busraciftlik.music.provider.dto.request.AlbumRequest;
 import com.atmosware.busraciftlik.music.provider.dto.request.CreateArtistRequest;
-import com.atmosware.busraciftlik.music.provider.dto.request.UpdateArtistNameRequest;
 import com.atmosware.busraciftlik.music.provider.entity.Album;
 import com.atmosware.busraciftlik.music.provider.entity.Artist;
 import com.atmosware.busraciftlik.music.provider.entity.Music;
@@ -75,7 +74,7 @@ public class ArtistServiceImpl implements ArtistService {
         return mapArtistEntity2ArtistDto(artist);
     }
 
-    @Override
+/*    @Override
     public Set<MusicDto> addMusic(Integer artistId, Music music) {
         Artist artist = repository.findById(artistId).orElseThrow();
         Set<Music> musics = artist.getMusics();
@@ -85,7 +84,7 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    // TODO: 1.08.2023  
+    // TODO: 1.08.2023
     public Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest request) {
         Artist artist = repository.findById(artistId).orElseThrow(()->new BusinessException(Message.Artist.NOT_EXISTS));
         Album album = Album.builder().name(request.getName()).build();
@@ -93,15 +92,7 @@ public class ArtistServiceImpl implements ArtistService {
         albums.add(album);
         Artist saved = repository.save(artist);
         return mapAlbumEntity2AlbumDto(saved.getAlbums());
-    }
-
-    @Override
-    public ArtistDto updateArtistName(Integer id, UpdateArtistNameRequest request) {
-        Artist artist = repository.findById(id).orElseThrow();
-        artist.setName(request.getName());
-        Artist saved = repository.save(artist);
-        return mapArtistEntity2ArtistDto(saved);
-    }
+    }*/
 
     @Autowired
     public void setAlbumService(@Lazy AlbumService albumService) {
