@@ -1,4 +1,4 @@
-package com.atmosware.busraciftlik.music.provider.config;
+package com.atmosware.busraciftlik.music.provider.config.filter;
 
 import com.atmosware.busraciftlik.music.provider.service.security.JwtService;
 import jakarta.servlet.FilterChain;

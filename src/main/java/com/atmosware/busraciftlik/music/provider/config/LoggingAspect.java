@@ -14,13 +14,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LoggingAspect {
 
-    @Around("execution(* com.atmosware.busraciftlik.music.provider..*(..)) && !execution(* com.atmosware.busraciftlik.music.provider.component..*(..))")
+    @Around("execution(* com.atmosware.busraciftlik.music.provider..*(..)) && !execution(* com.atmosware.busraciftlik.music.provider.config.filter..*(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         final String className = joinPoint.getTarget().getClass().getSimpleName();
         final String methodName = joinPoint.getSignature().getName();
-        log.info("Before method execution {}#{}", className, methodName);
+        log.debug("Before method execution {}#{}", className, methodName);
         final Object result = joinPoint.proceed();
-        log.info("After method execution {}#{}", className, methodName);
+        log.debug("After method execution {}#{}", className, methodName);
         return result;
     }
 

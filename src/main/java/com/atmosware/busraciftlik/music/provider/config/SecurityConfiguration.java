@@ -1,5 +1,6 @@
 package com.atmosware.busraciftlik.music.provider.config;
 
+import com.atmosware.busraciftlik.music.provider.config.filter.JwtAuthenticationFilter;
 import com.atmosware.busraciftlik.music.provider.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
