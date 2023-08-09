@@ -1,6 +1,5 @@
 package com.atmosware.busraciftlik.music.provider.config;
 
-import com.atmosware.busraciftlik.music.provider.component.JwtAuthenticationFilter;
 import com.atmosware.busraciftlik.music.provider.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +27,7 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**").permitAll()
+                        .requestMatchers("/api/v1/auth/**","/swagger-ui/**","/v3/api-docs/**","/actuator/**","/actuator/prometheus/**").permitAll()
                         .requestMatchers(HttpMethod.GET).hasAnyRole(Role.ADMIN.name(),Role.USER.name())
                         //.requestMatchers("/api/**").hasRole(Role.ADMIN.name())
                         .anyRequest().authenticated())

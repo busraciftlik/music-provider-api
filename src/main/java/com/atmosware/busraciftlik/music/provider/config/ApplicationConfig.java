@@ -44,14 +44,3 @@ public class ApplicationConfig {
         return new BCryptPasswordEncoder();
     }
 }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        return new UserDetailsService() {
-//            @Override
-//            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//                return null;
-//            }
-//        }
-//    }
-

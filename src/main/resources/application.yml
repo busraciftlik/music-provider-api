@@ -23,4 +23,8 @@ spring:
     password: '12345'
     username: postgres
     url: jdbc:postgresql://localhost:5432/music-db
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus

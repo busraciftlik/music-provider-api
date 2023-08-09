@@ -1,22 +1,25 @@
 version: '3'
 services:
     prometheus:
+      container_name: prometheus
       image: prom/prometheus
-      container_name: music-provider-prometheus
+      restart: always
+      extra_hosts:
+        - host.docker.internal:host-gateway
+      command:
+        - --config.file=/etc/prometheus/prometheus.yml
+      volumes:
+        - ./data/prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml
       ports:
         - "9090:9090"
-#      volumes:
-#        - ./prometheus.yml:/etc/prometheus/prometheus.yml
     grafana:
+      container_name: grafana
       image: grafana/grafana
-      container_name: music-provider-grafana
       ports:
         - "3000:3000"
-#      volumes:
-#        - grafana-storage:/var/lib/grafana
     redis:
       image: redislabs/redismod
-      container_name: music-provider-redis
+      container_name: redis
       ports:
         - "6379:6379"
 

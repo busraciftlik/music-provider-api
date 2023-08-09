@@ -36,7 +36,6 @@ public class LoadInitialData {
     }
 
     private List<Artist> generateRandomArtists() {
-//        log.info("generateRandomArtists is started");
         List<Artist> artistList = new ArrayList<>();
         for (int i = 0; i < ARTIST_NUMBER; i++) {
             Artist artist = new Artist();
@@ -55,7 +54,6 @@ public class LoadInitialData {
             album.setName(faker.rickAndMorty().location());
             Set<Music> musicSet = randomSubset(musics);
             for (Music music : musicSet) {
-                // Optional.ofNullable(music.getAlbum()).ifPresent(it-> album.addToMusics(music));
                 if (music.getAlbum() == null) {
                     album.addToMusics(music);
                 }

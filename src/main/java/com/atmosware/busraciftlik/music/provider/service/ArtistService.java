@@ -20,7 +20,4 @@ public interface ArtistService  {
     ArtistDto update(Integer id, Artist artist);
 
     ArtistDto delete(Integer id);
-/*    Set<MusicDto> addMusic(Integer artistId, Music music);
-    Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest album);*/
-
 }
