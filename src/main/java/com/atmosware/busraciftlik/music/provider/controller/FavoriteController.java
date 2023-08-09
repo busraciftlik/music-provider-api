@@ -7,11 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/favorite")
 @RequiredArgsConstructor
 public class FavoriteController {
     private final FavoriteService service;
+
+    @GetMapping("/getAll")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public List<FavoriteDto> findAll(){
+        return service.findAll();
+    }
 
     @PostMapping("/like")
     @PreAuthorize("hasAnyRole('ADMIN','USER')")

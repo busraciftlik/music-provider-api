@@ -19,13 +19,8 @@ public class PlaylistController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public PlaylistDto add(@RequestBody PlaylistRequest request) {
-        return service.add(request);
-    }
-
-    @PostMapping("/addMusic")
-    public PlaylistDto addMusic(@RequestBody PlaylistRequest request) {
         return service.add(request);
     }
 

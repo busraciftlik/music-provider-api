@@ -22,10 +22,12 @@ import java.util.Set;
 @Where(clause = "status <> 'INACTIVE'")
 public class Music extends BaseEntity {
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+    @Where(clause = "status <> 'INACTIVE'")
     private Artist artist;
     @JsonBackReference
     @ManyToOne ///(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @Where(clause = "status <> 'INACTIVE'")
     private Album album;
     @Enumerated(EnumType.STRING)
     private Genre genre;

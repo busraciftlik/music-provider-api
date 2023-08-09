@@ -49,14 +49,16 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    @CacheEvict(value = "music_set", allEntries = true)
+    @CacheEvict(value = {"music_set","artist_set"}, allEntries = true)
     public MusicDto add(CreateMusicRequest request) {
         Artist artist = artistService.getById(request.getArtistId());
-        //Music saved = repository.save(Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build());
-        final Music music = Music.builder().name(request.getName()).genre(request.getGenre()).artist(artist).build();
-        artist.addToMusics(music);
-        artistService.update(artist.getId(), artist);
-        return mapMusicEntity2MusicDto(music);
+        final Music music = Music.builder()
+                .name(request.getName())
+                .genre(request.getGenre())
+                .artist(artist)
+                .build();
+        final Music saved = repository.save(music);
+        return mapMusicEntity2MusicDto(saved);
 
     }
 
@@ -71,7 +73,7 @@ public class MusicServiceImpl implements MusicService {
     }
 
     @Override
-    @CacheEvict(value = "music_set", keyGenerator = "customKeyGenerator")
+    @CacheEvict(value = {"music_set","artist_set"} , keyGenerator = "customKeyGenerator")
     public Music delete(Integer id) {
         Music music = repository.findById(id).orElseThrow(() -> new BusinessException(Message.Music.NOT_EXISTS));
         repository.deleteById(id);
@@ -80,6 +82,7 @@ public class MusicServiceImpl implements MusicService {
 
     /**
      * Searches for music by the name of the album it belongs to
+     *
      * @param albumName The name of the album to search for music
      * @return A set of {@link MusicDto} objects representing the music found with the specified album name.
      * If no music matches the given album name, an empty set is returned.
@@ -93,6 +96,7 @@ public class MusicServiceImpl implements MusicService {
 
     /**
      * Searches for music by the name of artist it belongs to
+     *
      * @param artisName The of the artist to search for music
      * @return A set of {@link MusicDto} objects representing the music found with the specified artist name.
      * If no music matches the given artist name, an empty set is returned.
@@ -105,6 +109,7 @@ public class MusicServiceImpl implements MusicService {
 
     /**
      * Searches for music by the specified genre
+     *
      * @param genre The genre to search for music
      * @return A set of {@link MusicDto} objects representing the music found with the specified genre.
      * If no music matches the given genre, an empty set is returned

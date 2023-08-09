@@ -44,7 +44,7 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "album_set",allEntries = true)
+    @CacheEvict(value = {"album_set","artist_set","music_set"},allEntries = true)
     // TODO: 5.08.2023 -> veritabanındaki tüm ilişkiler kurulmasına rağmen artist ve müziğe albüm eklenmiyor 
     public AlbumDto add(CreateAlbumRequest request) {
         Set<Music> musics = musicService.findAllByIdsAndArtistId(request.getMusicIds(), request.getArtistId());
@@ -55,12 +55,13 @@ public class AlbumServiceImpl implements AlbumService {
         final Album album = Album.builder()
                 .name(request.getName())
                 .releaseDate(LocalDate.now())
+                .artist(artist)
                 .build();
         musics.forEach(album::addToMusics);
-        musics.forEach(music -> musicService.update(music.getId(),music));
-        artist.addToAlbums(album);
-        artistService.update(artist.getId(),artist);
-        return mapAlbumEntity2AlbumDto(album);
+//        artist.addToAlbums(album);
+//        artistService.update(artist.getId(),artist);
+        final Album saved = repository.save(album);
+        return mapAlbumEntity2AlbumDto(saved);
     }
 
     @Override
@@ -72,7 +73,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    @CacheEvict(value = "album_set", keyGenerator = "customKeyGenerator")
+    @CacheEvict(value = {"album_set", "music_set" }, keyGenerator = "customKeyGenerator")
     public AlbumDto delete(Integer id) {
         Album album = repository.findById(id).orElseThrow(()-> new BusinessException(Message.Album.NOT_EXISTS));
         repository.deleteById(id);

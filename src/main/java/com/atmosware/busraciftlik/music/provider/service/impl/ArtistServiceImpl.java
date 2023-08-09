@@ -62,32 +62,12 @@ public class ArtistServiceImpl implements ArtistService {
     }
 
     @Override
-    @CacheEvict(value = "artist_set", keyGenerator = "customKeyGenerator")
+    @CacheEvict(value = {"artist_set","album_set","music_set"}, keyGenerator = "customKeyGenerator")
     public ArtistDto delete(Integer id) {
         Artist artist = repository.findById(id).orElseThrow();
         repository.deleteById(id);
         return mapArtistEntity2ArtistDto(artist);
     }
-
-/*    @Override
-    public Set<MusicDto> addMusic(Integer artistId, Music music) {
-        Artist artist = repository.findById(artistId).orElseThrow();
-        Set<Music> musics = artist.getMusics();
-        musics.add(music);
-        Artist saved = repository.save(artist);
-        return mapMusicEntity2MusicDto(saved.getMusics());
-    }
-
-    @Override
-    // TODO: 1.08.2023
-    public Set<AlbumDto> addAlbum(Integer artistId, AlbumRequest request) {
-        Artist artist = repository.findById(artistId).orElseThrow(()->new BusinessException(Message.Artist.NOT_EXISTS));
-        Album album = Album.builder().name(request.getName()).build();
-        Set<Album> albums = artist.getAlbums();
-        albums.add(album);
-        Artist saved = repository.save(artist);
-        return mapAlbumEntity2AlbumDto(saved.getAlbums());
-    }*/
 
     @Autowired
     public void setAlbumService(@Lazy AlbumService albumService) {

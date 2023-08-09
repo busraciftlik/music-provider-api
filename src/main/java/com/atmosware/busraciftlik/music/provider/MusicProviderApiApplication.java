@@ -7,7 +7,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
-@EnableCaching
+//@EnableCaching
 public class MusicProviderApiApplication {
 
     public static void main(String[] args) {

@@ -18,7 +18,7 @@ spring:
             mode: none
     hibernate:
       ddl-auto: update
-    show-sql: 'false'
+    show-sql: 'true'
   datasource:
     password: '12345'
     username: postgres

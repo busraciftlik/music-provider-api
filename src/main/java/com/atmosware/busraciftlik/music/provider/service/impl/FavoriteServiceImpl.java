@@ -11,7 +11,9 @@ import com.atmosware.busraciftlik.music.provider.service.security.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.*;
+import java.util.List;
+
+import static com.atmosware.busraciftlik.music.provider.util.EntityDtoMapper.mapFavoriteEntity2FavoriteDto;
 
 
 @Service
@@ -21,10 +23,15 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final MusicService musicService;
     private final JwtService jwtService;
 
+    public List<FavoriteDto> findAll() {
+        return mapFavoriteEntity2FavoriteDto(repository.findAll());
+    }
+
 
     /**
      * This method saves the user who liked the music with the given music ID
      * and adds this like information to the database
+     *
      * @param musicId The ID of the liked music.
      * @return The {@link FavoriteDto} object containing the like information for the liked music.
      */
@@ -42,6 +49,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     /**
      * Unlikes the music with the specified musicId for the currently authenticated user.
+     *
      * @param musicId The ID of the music to be unliked.
      * @return The {@link FavoriteDto} object representing the unliked music's like information.
      */
@@ -54,9 +62,10 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     /**
-     Returns the number of likes for the music with the specified musicId.
-     @param musicId The ID of the music to get the like count for.
-     @return The number of likes for the music with the given musicId
+     * Returns the number of likes for the music with the specified musicId.
+     *
+     * @param musicId The ID of the music to get the like count for.
+     * @return The number of likes for the music with the given musicId
      */
     @Override
     public int getLikeCount(Integer musicId) {

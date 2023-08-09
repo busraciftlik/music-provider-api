@@ -22,11 +22,13 @@ import java.util.Set;
 @Where(clause = "status <> 'INACTIVE'")
 public class Artist extends BaseEntity {
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artist")
     @Builder.Default
+    @Where(clause = "status <> 'INACTIVE'")
     private Set<Music> musics = new HashSet<>();
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "artist")
     @Builder.Default
+    @Where(clause = "status <> 'INACTIVE'")
     private Set<Album> albums = new HashSet<>();
 
     public void addToMusics(Music music){

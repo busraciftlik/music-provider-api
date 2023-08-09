@@ -1,10 +1,7 @@
 package com.atmosware.busraciftlik.music.provider.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
@@ -27,10 +24,12 @@ public class Album extends BaseEntity {
     private String name;
     private LocalDate releaseDate;
     @JsonManagedReference
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
     @Builder.Default
+    @Where(clause = "status <> 'INACTIVE'")
     private Set<Music> musics = new HashSet<>();
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE,CascadeType.DETACH,CascadeType.REFRESH})
+    @Where(clause = "status <> 'INACTIVE'")
     private Artist artist;
 
     public void addToMusics(Music music) {
